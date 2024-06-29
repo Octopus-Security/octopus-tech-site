@@ -1,0 +1,44 @@
+body {
+  background-color: #2b2825;
+}
+
+div.topnav{
+  padding: 0, 5px, 25px, 5px;
+}
+
+.topnav{
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    /*top, right, bottom, left*/
+    overflow: hidden;
+    background-color: #000;
+  }
+  li {
+    float: left;
+  }
+  li a {
+    display: block;
+    color: #0F0;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  /* Change the link color on hover */
+  li a:hover {
+    background-color: #0f0;
+    color: #000;
+  }
+}
+
+.bottom {
+  padding: 10px;
+  #logo{
+    height: 25%;
+  }
+}
+
+#ghLink {
+   width:25px;
+}
