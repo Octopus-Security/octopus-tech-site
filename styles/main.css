@@ -42,3 +42,11 @@ div.topnav{
 #ghLink {
    width:25px;
 }
+
+.projectList{
+  list-style-type: none;
+  a{
+    color: #0F0;
+    text-decoration: none;
+  }
+}
