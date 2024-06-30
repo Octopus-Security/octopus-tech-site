@@ -52,10 +52,25 @@ body {
   color: #000;
 }
 
+.projectList{
+  list-style-type: none;
+  a{
+    color: #0F0;
+    text-decoration: none;
+  }
+  a:hover{
+    color: aquamarine;
+  } 
+}
+
 .bottom {
+
+  position:relative;
+  bottom: 0px;
+  width:100%;
   
   #otlogo {
-    height: 25%;
+    width: 30%;
   }
   #ghLink {
     width:25px;
@@ -72,24 +87,8 @@ body {
   }
   a:hover{
     color: aquamarine;
-  } 
-}
-
-
-.projectList{
-  list-style-type: none;
-  a{
-    color: #0F0;
-    text-decoration: none;
   }
-  a:hover{
-    color: aquamarine;
-  } 
 }
 
-.bottom {
-  position:absolute;
-   bottom:0;
-   width:100%;
-   height:750px;
-}
+
+
