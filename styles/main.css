@@ -121,3 +121,39 @@ img {
     height: auto; /* Maintains proportionality */
     vertical-align: middle; /* Helps align it nicely with the text */
 }
+
+/* Basic styling for the lizard button container */
+.lizard {
+    display: inline-block;
+    vertical-align: top; /* Aligns it with the top of the menu button */
+    margin-left: 10px;
+}
+
+/* Style the lizard button to match the menu button */
+.lizardButton {
+    background-color: black;
+    color: #0F0;
+    padding: 16px;
+    font-size: 16px; /* The emoji will inherit this size */
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+/* Style for the individual falling lizards */
+.falling-lizard {
+    position: fixed; /* Positions relative to the viewport */
+    top: -50px;      /* Start above the screen */
+    pointer-events: none; /* Lizards can't be clicked */
+    z-index: 9999;   /* Ensure they are on top of everything */
+    animation: fall linear; /* Apply the 'fall' animation */
+    user-select: none; /* Prevents highlighting the emoji */
+}
+
+/* The animation keyframes for the fall */
+@keyframes fall {
+    to {
+        /* Move the lizard from the top all the way past the bottom of the screen */
+        transform: translateY(110vh) rotate(720deg);
+    }
+}
