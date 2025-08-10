@@ -123,37 +123,46 @@ img {
 }
 
 /* Basic styling for the lizard button container */
-.lizard {
-    display: inline-block;
-    vertical-align: top; /* Aligns it with the top of the menu button */
-    margin-left: 10px;
+.topBar {
+   display: flex; /* Use flexbox for alignment */
+   justify-content: space-between; /* Push menu to left, lizard to right */
+   align-items: center; /* Vertically align items in the top bar */
+   padding: 10px 20px; /* Add some padding around the top bar content */
 }
 
-/* Style the lizard button to match the menu button */
+.lizard {
+   /* No need for inline-block anymore as flexbox handles layout */
+   vertical-align: top;
+   margin-left: 0; /* Reset any previous left margin */
+}
+
+/* Style the lizard button to be bigger */
 .lizardButton {
-    background-color: black;
-    color: #0F0;
-    padding: 16px;
-    font-size: 16px; /* The emoji will inherit this size */
-    border: none;
-    cursor: pointer;
-    border-radius: 10px;
+   background-color: black;
+   color: #0F0;
+   padding: 20px 25px; /* Increased padding for a larger button */
+   font-size: 20px; /* Slightly larger emoji */
+   border: none;
+   cursor: pointer;
+   border-radius: 10px;
 }
 
 /* Style for the individual falling lizards */
 .falling-lizard {
-    position: fixed; /* Positions relative to the viewport */
-    top: -50px;      /* Start above the screen */
-    pointer-events: none; /* Lizards can't be clicked */
-    z-index: 9999;   /* Ensure they are on top of everything */
-    animation: fall linear; /* Apply the 'fall' animation */
-    user-select: none; /* Prevents highlighting the emoji */
+   position: fixed; /* Positions relative to the viewport */
+   top: -50px;      /* Start above the screen */
+   pointer-events: none; /* Lizards can't be clicked */
+   z-index: 9999;   /* Ensure they are on top of everything */
+   animation-name: fall; /* Apply the 'fall' animation */
+   animation-timing-function: linear; /* Constant speed */
+   /* Duration and delay are set in JavaScript */
+   user-select: none; /* Prevents highlighting the emoji */
 }
 
 /* The animation keyframes for the fall */
 @keyframes fall {
-    to {
-        /* Move the lizard from the top all the way past the bottom of the screen */
-        transform: translateY(110vh) rotate(720deg);
-    }
+   to {
+       /* Move the lizard from the top all the way past the bottom of the screen */
+       transform: translateY(110vh) rotate(720deg);
+   }
 }
