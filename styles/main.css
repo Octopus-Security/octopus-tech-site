@@ -7,14 +7,13 @@ body.tiled-bg {
     background-repeat: repeat;
 }
 
-/* NEW: Styles for the content wrapper to make text readable */
+/* UPDATED: Increased margin and removed shadow */
 .content-container {
     width: 85%;
-    margin: 4% auto; /* Centers the box on the page */
+    margin: 8% auto; /* Doubled top/bottom margin for more background space */
     padding: 25px;
-    background-color: #333333; /* The original background color */
-    border-radius: 15px; /* This creates the rounded rectangle */
-    box-shadow: 0 8px 16px rgba(0,0,0,0.3); /* Adds a subtle shadow for depth */
+    background-color: #333333; 
+    border-radius: 15px; 
 }
 
 ul {
@@ -100,50 +99,42 @@ a:hover {
     display: block; 
 }
 
-/* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {
     
 }
 
-/* General responsive image rule (recommended for all images to prevent overflow) */
 img {
     max-width: 100%; 
     height: auto;    
 }
 
-/* Specific styling for the Octopus logo */
 #otlogo {
     width: 25%;
     height: auto; 
 }
 
-/* Styling for GitHub logos */
 .github-logo {
     width: 7%; 
     height: auto; 
     vertical-align: middle; 
 }
 
-/* UPDATED: Added a background and shadow to the top bar */
+/* UPDATED: Increased margin and removed shadow */
 .topBar {
    display: flex; 
    justify-content: space-between; 
    align-items: center; 
    padding: 10px 20px;
-   /* New styles for the background */
-   margin: 10px;
+   margin: 20px; /* Doubled margin */
    border-radius: 10px;
    background-color: #333333;
-   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
-/* New container for the extra buttons */
 .extra-buttons {
    display: flex; 
    gap: 10px; 
 }
 
-/* Combined style for both buttons to avoid repeating code */
 .lizardButton, .ratButton {
    background-color: black;
    color: #0F0;
@@ -154,7 +145,6 @@ img {
    border-radius: 10px;
 }
 
-/* Style for the individual falling lizards */
 .falling-lizard {
    position: fixed; 
    top: -50px;      
@@ -165,7 +155,6 @@ img {
    user-select: none; 
 }
 
-/* The animation keyframes for the fall */
 @keyframes fall {
    to {
        transform: translateY(110vh) rotate(720deg);
