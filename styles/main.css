@@ -2,6 +2,12 @@ body {
     background-color: #333333;
 }
 
+/* This class will be added by JavaScript to tile the background */
+body.tiled-bg {
+    background-image: url('../images/block.png');
+    background-repeat: repeat;
+}
+
 ul {
     list-style-type: none;
 }
@@ -100,20 +106,7 @@ img {
 #otlogo {
     width: 25%; /* Sets the width of the octopus logo to 15% of its container */
     height: auto; /* Ensures it scales proportionally */
-    /* If you want to center it and remove the <center> tag from HTML, you'd add:
-    display: block;
-    margin: 0 auto;
-    */
 }
-
-/* Add specific rules for other images if they are still too large
-   For example, if you have images inside your #contentBubble:
-#contentBubble img {
-    width: 80%;
-    max-width: 500px; // Example: max width of 500px, 80% of container otherwise
-    height: auto;
-}
-*/
 
 /* Styling for GitHub logos */
 .github-logo {
@@ -125,19 +118,19 @@ img {
 /* Basic styling for the lizard button container */
 .topBar {
    display: flex; /* Use flexbox for alignment */
-   justify-content: space-between; /* Push menu to left, lizard to right */
+   justify-content: space-between; /* Push menu to left, buttons to right */
    align-items: center; /* Vertically align items in the top bar */
    padding: 10px 20px; /* Add some padding around the top bar content */
 }
 
-.lizard {
-   /* No need for inline-block anymore as flexbox handles layout */
-   vertical-align: top;
-   margin-left: 0; /* Reset any previous left margin */
+/* New container for the extra buttons */
+.extra-buttons {
+   display: flex; /* Use flexbox to line up buttons side-by-side */
+   gap: 10px; /* Adds space between the buttons */
 }
 
-/* Style the lizard button to be bigger */
-.lizardButton {
+/* Combined style for both buttons to avoid repeating code */
+.lizardButton, .ratButton {
    background-color: black;
    color: #0F0;
    padding: 20px 25px; /* Increased padding for a larger button */
@@ -155,7 +148,6 @@ img {
    z-index: 9999;   /* Ensure they are on top of everything */
    animation-name: fall; /* Apply the 'fall' animation */
    animation-timing-function: linear; /* Constant speed */
-   /* Duration and delay are set in JavaScript */
    user-select: none; /* Prevents highlighting the emoji */
 }
 
