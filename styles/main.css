@@ -10,7 +10,7 @@ body.tiled-bg {
 /* UPDATED: Increased margin and removed shadow */
 .content-container {
     width: 85%;
-    margin: 8% auto; /* Doubled top/bottom margin for more background space */
+    margin: 2% auto; /* Doubled top/bottom margin for more background space */
     padding: 25px;
     background-color: #333333; 
     border-radius: 15px; 
