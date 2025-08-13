@@ -2,10 +2,19 @@ body {
     background-color: #333333;
 }
 
-/* This class will be added by JavaScript to tile the background */
 body.tiled-bg {
     background-image: url('../images/block.png');
     background-repeat: repeat;
+}
+
+/* NEW: Styles for the content wrapper to make text readable */
+.content-container {
+    width: 85%;
+    margin: 4% auto; /* Centers the box on the page */
+    padding: 25px;
+    background-color: #333333; /* The original background color */
+    border-radius: 15px; /* This creates the rounded rectangle */
+    box-shadow: 0 8px 16px rgba(0,0,0,0.3); /* Adds a subtle shadow for depth */
 }
 
 ul {
@@ -44,13 +53,13 @@ a:hover {
 
 /* Dropdown Button */
 .dropbtn {
-    background-color: black; /* Button background color is black */
+    background-color: black; 
     color: #0F0;
     padding: 16px;
     font-size: 16px;
     border: none;
     cursor: pointer;
-    border-radius: 10px; /* Less drastic rounding for the button */
+    border-radius: 10px; 
     min-width: 120px;
 }
 
@@ -62,33 +71,33 @@ a:hover {
 
 /* Dropdown Content (Hidden by Default) */
 .dropdown-content {
-    display: none; /* Hides the dropdown content by default */
+    display: none; 
     position: absolute;
-    background-color: #444444; /* darker grey background for the dropdown items */
+    background-color: #444444; 
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1; /* Ensures it appears above other content */
+    z-index: 1;
     border-radius: 5px;
 }
 
 /* Links inside the dropdown */
 .dropdown-content a {
-    color: #0F0; /* Text color for dropdown links */
+    color: #0F0; 
     padding: 12px 16px;
     text-decoration: none;
-    display: block; /* Makes links take full width of dropdown */
+    display: block; 
     text-align: left;
 }
 
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {
-    background-color: #333333; /* Darker background on hover for menu items */
-    color: #0F0; /* Menu item text turns bright green on hover */
+    background-color: #333333; 
+    color: #0F0; 
 }
 
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
-    display: block; /* Shows the dropdown content when hovering over the .dropdown container */
+    display: block; 
 }
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
@@ -98,43 +107,48 @@ a:hover {
 
 /* General responsive image rule (recommended for all images to prevent overflow) */
 img {
-    max-width: 100%; /* Ensures images never overflow their parent container */
-    height: auto;    /* Maintains aspect ratio (scales proportionally) */
+    max-width: 100%; 
+    height: auto;    
 }
 
 /* Specific styling for the Octopus logo */
 #otlogo {
-    width: 25%; /* Sets the width of the octopus logo to 15% of its container */
-    height: auto; /* Ensures it scales proportionally */
+    width: 25%;
+    height: auto; 
 }
 
 /* Styling for GitHub logos */
 .github-logo {
-    width: 7%; /* Sets the width of the GitHub logos to 10% */
-    height: auto; /* Maintains proportionality */
-    vertical-align: middle; /* Helps align it nicely with the text */
+    width: 7%; 
+    height: auto; 
+    vertical-align: middle; 
 }
 
-/* Basic styling for the lizard button container */
+/* UPDATED: Added a background and shadow to the top bar */
 .topBar {
-   display: flex; /* Use flexbox for alignment */
-   justify-content: space-between; /* Push menu to left, buttons to right */
-   align-items: center; /* Vertically align items in the top bar */
-   padding: 10px 20px; /* Add some padding around the top bar content */
+   display: flex; 
+   justify-content: space-between; 
+   align-items: center; 
+   padding: 10px 20px;
+   /* New styles for the background */
+   margin: 10px;
+   border-radius: 10px;
+   background-color: #333333;
+   box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
 /* New container for the extra buttons */
 .extra-buttons {
-   display: flex; /* Use flexbox to line up buttons side-by-side */
-   gap: 10px; /* Adds space between the buttons */
+   display: flex; 
+   gap: 10px; 
 }
 
 /* Combined style for both buttons to avoid repeating code */
 .lizardButton, .ratButton {
    background-color: black;
    color: #0F0;
-   padding: 20px 25px; /* Increased padding for a larger button */
-   font-size: 20px; /* Slightly larger emoji */
+   padding: 20px 25px; 
+   font-size: 20px; 
    border: none;
    cursor: pointer;
    border-radius: 10px;
@@ -142,19 +156,18 @@ img {
 
 /* Style for the individual falling lizards */
 .falling-lizard {
-   position: fixed; /* Positions relative to the viewport */
-   top: -50px;      /* Start above the screen */
-   pointer-events: none; /* Lizards can't be clicked */
-   z-index: 9999;   /* Ensure they are on top of everything */
-   animation-name: fall; /* Apply the 'fall' animation */
-   animation-timing-function: linear; /* Constant speed */
-   user-select: none; /* Prevents highlighting the emoji */
+   position: fixed; 
+   top: -50px;      
+   pointer-events: none; 
+   z-index: 9999;   
+   animation-name: fall; 
+   animation-timing-function: linear; 
+   user-select: none; 
 }
 
 /* The animation keyframes for the fall */
 @keyframes fall {
    to {
-       /* Move the lizard from the top all the way past the bottom of the screen */
        transform: translateY(110vh) rotate(720deg);
    }
 }
