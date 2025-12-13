@@ -114,7 +114,7 @@ img {
 }
 
 .github-logo {
-    width: 7%; 
+    width: 24px; 
     height: auto; 
     vertical-align: middle; 
 }
@@ -159,4 +159,44 @@ img {
    to {
        transform: translateY(110vh) rotate(720deg);
    }
+}
+
+/* Contact Form Styles */
+.contact-form {
+    background-color: #444;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.contact-form h2 {
+    color: #0F0;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: #555;
+    color: #fff;
+}
+
+.contact-form button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: black;
+    color: #0F0;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.contact-info {
+    text-align: center;
 }
