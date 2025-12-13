@@ -17,12 +17,6 @@ body.tiled-bg {
     margin-bottom: 7%;
 }
 
-.content {
-    padding: 25px;
-    background-color: #333333;
-    border-radius: 15px;
-}
-
 #conversationsimg {
     width: 60%;
 }
@@ -108,8 +102,7 @@ img {
 }
 
 .github-logo {
-    width: 24px; 
-    height: auto; 
+    height: 1.5em;
     vertical-align: middle; 
 }
 
