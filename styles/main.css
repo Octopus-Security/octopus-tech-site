@@ -9,24 +9,18 @@ body.tiled-bg {
 
 /* UPDATED: Increased margin and removed shadow */
 .content-container {
-    width: 85%;
-    margin: 2% auto; /* Doubled top/bottom margin for more background space */
-    padding: 25px;
-    background-color: #333333; 
-    border-radius: 15px; 
-}
-
-ul {
-    list-style-type: none;
-}
-
-#contentBubble {
     width: 80%;
     background: #494949;
-    margin-top: 7%;
+    margin: 2% auto;
     padding: 2%;
     border-radius: 10px;
     margin-bottom: 7%;
+}
+
+.content {
+    padding: 25px;
+    background-color: #333333;
+    border-radius: 15px;
 }
 
 #conversationsimg {
@@ -130,10 +124,6 @@ img {
    background-color: #333333;
 }
 
-.extra-buttons {
-   display: flex; 
-   gap: 10px; 
-}
 
 .lizardButton, .ratButton {
    background-color: black;
@@ -159,42 +149,6 @@ img {
    to {
        transform: translateY(110vh) rotate(720deg);
    }
-}
-
-/* Contact Form Styles */
-.contact-form {
-    background-color: #444;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-}
-
-.contact-form h2 {
-    color: #0F0;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.contact-form input,
-.contact-form textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #555;
-    border-radius: 5px;
-    background-color: #555;
-    color: #fff;
-}
-
-.contact-form button {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: black;
-    color: #0F0;
-    cursor: pointer;
-    font-size: 16px;
 }
 
 .contact-info {

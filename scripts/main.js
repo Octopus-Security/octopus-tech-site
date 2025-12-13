@@ -6,11 +6,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const lizardButton = document.querySelector('.lizardButton');
     const lizardSound = document.getElementById('lizardSound');
 
-    lizardButton.addEventListener('click', () => {
-        lizardSound.currentTime = 0;
-        lizardSound.play();
-        createFallingLizards();
-    });
+    if (lizardButton) {
+        lizardButton.addEventListener('click', () => {
+            lizardSound.currentTime = 0;
+            lizardSound.play();
+            createFallingLizards();
+        });
+    }
+
 
     function createFallingLizards() {
         const lizardCount = 20;
@@ -33,10 +36,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Get a reference to the new rat button
     const ratButton = document.querySelector('.ratButton');
 
-    // Add a click event listener
-    ratButton.addEventListener('click', () => {
-        // Add the 'tiled-bg' class to the body to change the background
-        document.body.classList.add('tiled-bg');
-    });
+    if (ratButton) {
+        // Add a click event listener
+        ratButton.addEventListener('click', () => {
+            // Add the 'tiled-bg' class to the body to change the background
+            document.body.classList.add('tiled-bg');
+        });
+    }
 
 });
