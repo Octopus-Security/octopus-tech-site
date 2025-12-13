@@ -153,17 +153,37 @@ ul {
 }
 
 @media (max-width: 768px) {
+    body {
+        font-size: 18px;
+    }
+
     .content-container {
         width: 95%;
         padding: 10px;
     }
 
     h1 {
+        font-size: 2em;
+    }
+
+    h3 {
         font-size: 1.5em;
     }
 
-    p {
+    h4 {
+        font-size: 1.2em;
+    }
+
+    h5 {
         font-size: 1em;
+    }
+
+    p, a, li {
+        font-size: 1.2em;
+    }
+
+    .dropbtn {
+        font-size: 1.2em;
     }
 
     .github-logo {
