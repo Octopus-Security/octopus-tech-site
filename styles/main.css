@@ -151,3 +151,26 @@ img {
 ul {
     list-style-type: none;
 }
+
+@media (max-width: 768px) {
+    .content-container {
+        width: 95%;
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 1.5em;
+    }
+
+    p {
+        font-size: 1em;
+    }
+
+    .github-logo {
+        height: 2em;
+    }
+
+    #otlogo {
+        width: 50%;
+    }
+}
