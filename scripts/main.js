@@ -33,15 +33,33 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- New Rat Button Logic ---
-    // Get a reference to the new rat button
     const ratButton = document.querySelector('.ratButton');
+    const ratSound = document.getElementById('ratSound');
 
     if (ratButton) {
-        // Add a click event listener
         ratButton.addEventListener('click', () => {
-            // Add the 'tiled-bg' class to the body to change the background
+            ratSound.currentTime = 0;
+            ratSound.play();
+            createFallingRats();
             document.body.classList.add('tiled-bg');
         });
+    }
+
+    function createFallingRats() {
+        const ratCount = 20;
+        for (let i = 0; i < ratCount; i++) {
+            const rat = document.createElement('div');
+            rat.classList.add('falling-lizard'); // Re-using the same animation
+            rat.innerText = '🐀';
+            rat.style.left = Math.random() * 100 + 'vw';
+            rat.style.fontSize = Math.random() * 20 + 20 + 'px';
+            rat.style.animationDuration = Math.random() * 2 + 3 + 's';
+            rat.style.animationDelay = Math.random() * 0.5 + 's';
+            document.body.appendChild(rat);
+            rat.addEventListener('animationend', () => {
+                rat.remove();
+            });
+        }
     }
 
 });
