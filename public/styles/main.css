@@ -3,8 +3,9 @@ body {
 }
 
 body.tiled-bg {
-    background-image: url('../images/block.png');
+    background-image: url('../images/block.png') !important;
     background-repeat: repeat;
+    background-seze: 100px;
 }
 
 /* UPDATED: Increased margin and removed shadow */
