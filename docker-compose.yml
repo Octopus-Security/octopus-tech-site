@@ -1,11 +1,9 @@
 version: '3.8'
 services:
   octopus-web:
-    image: nginx:alpine
+    build: .              # <--- This tells it to use the Dockerfile
     container_name: octopus_site_internal
     restart: always
-    volumes:
-      - ./public:/usr/share/nginx/html
     networks:
       - web_proxy
 
