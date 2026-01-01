@@ -5,7 +5,7 @@ services:
     container_name: octopus_site_internal
     restart: always
     volumes:
-      - .:/usr/share/nginx/html
+      - ./public:/usr/share/nginx/html
     networks:
       - web_proxy
 
