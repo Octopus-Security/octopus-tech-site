@@ -50,12 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- New Rat Button Logic ---
     const ratButton = document.querySelector('.ratButton');
-    const ratSound = document.getElementById('ratSound');
 
-    if (ratButton && ratSound) {
+    if (ratButton) {
         ratButton.addEventListener('click', () => {
-            ratSound.currentTime = 0;
-            ratSound.play();
             createFallingRats();
             document.body.classList.add('tiled-bg');
         });
