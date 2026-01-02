@@ -196,16 +196,41 @@ ul {
     }
 
     .topBar {
-        flex-direction: column;
-        align-items: flex-start;
+        flex-direction: row; /* Keep items in a row */
+        align-items: center; /* Vertically align items */
+        justify-content: space-around; /* Distribute space evenly */
+        padding: 5px 10px; /* Adjust padding for smaller screens */
+    }
+
+    .dropdown {
+        flex-grow: 2; /* Menu takes double space */
+        text-align: center;
+    }
+
+    .nav-buttons-container {
+        display: flex;
+        flex-grow: 1; /* Allow the container to grow */
+        justify-content: space-around;
+        align-items: center;
     }
 
     .extra-buttons {
-        margin-top: 10px;
+        /* Removed flex-grow: 1 from here as it's now on nav-buttons-container */
+        display: flex;
+        justify-content: space-around;
+        margin-top: 0; /* Remove margin from previous setup */
     }
 
     .lizardButton, .ratButton {
-        padding: 10px 15px;
-        font-size: 16px;
+        padding: 8px 12px;
+        font-size: 14px;
+        flex-grow: 1; /* Allow buttons to grow */
+        margin: 0 5px; /* Add some spacing between buttons */
+    }
+
+    .content-container {
+        width: 95%;
+        padding: 10px;
+        word-wrap: break-word; /* Ensure text wraps */
     }
 }
