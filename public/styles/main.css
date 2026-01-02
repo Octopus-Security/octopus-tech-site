@@ -194,4 +194,18 @@ ul {
     #otlogo {
         width: 50%;
     }
+
+    .topBar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .extra-buttons {
+        margin-top: 10px;
+    }
+
+    .lizardButton, .ratButton {
+        padding: 10px 15px;
+        font-size: 16px;
+    }
 }
