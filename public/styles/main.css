@@ -149,10 +149,11 @@ img {
 /* End falling lizard animation */
 
 .contact-info {
-    
+    text-align: center;
 }
 
 .contactList {
+    display: inline-block;
     text-align: left;
     margin: 0 auto;
     max-width: 80%;
