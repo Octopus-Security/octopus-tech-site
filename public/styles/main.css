@@ -5,10 +5,9 @@ body {
 body.tiled-bg {
     background-image: url('../images/block.png') !important;
     background-repeat: repeat;
-    background-seze: 100px;
+    background-size: 100px;
 }
 
-/* UPDATED: Increased margin and removed shadow */
 .content-container {
     width: 80%;
     background: #494949;
@@ -107,18 +106,19 @@ img {
     vertical-align: middle; 
 }
 
-/* UPDATED: Increased margin and removed shadow */
+
+
 .topBar {
    display: flex; 
    justify-content: space-between; 
    align-items: center; 
    padding: 10px 20px;
-   margin: 20px; /* Doubled margin */
+   margin: 20px;
    border-radius: 10px;
    background-color: #333333;
 }
 
-
+/* Top bar buttons */
 .lizardButton, .ratButton {
    background-color: black;
    color: #0F0;
@@ -128,7 +128,9 @@ img {
    cursor: pointer;
    border-radius: 10px;
 }
+/* End top bar buttons */
 
+/* Falling lizard animation */
 .falling-lizard {
    position: fixed; 
    top: -50px;      
@@ -144,6 +146,7 @@ img {
        transform: translateY(110vh) rotate(720deg);
    }
 }
+/* End falling lizard animation */
 
 .contact-info {
     
@@ -159,6 +162,7 @@ ul {
     list-style-type: none;
 }
 
+/* MOBILE */
 @media (max-width: 768px) {
     .content-container {
         width: 95%;
@@ -239,3 +243,4 @@ ul {
         margin: 0 5px; /* Add some spacing between buttons */
     }
 }
+/*END MOBILE*/
