@@ -1,0 +1,142 @@
+/* public/styles/money-tracker.css */
+
+#auth-section, #money-tracker-dashboard {
+    padding: 20px;
+    background-color: #494949;
+    border-radius: 10px;
+    margin-top: 20px;
+    color: #0F0; /* Green text for consistency */
+}
+
+#auth-section h2, #money-tracker-dashboard h2, h3 {
+    color: #0F0;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#auth-section input[type="text"],
+#auth-section input[type="password"],
+#money-tracker-dashboard input[type="text"],
+#money-tracker-dashboard input[type="number"],
+#money-tracker-dashboard input[type="date"],
+#money-tracker-dashboard select {
+    width: calc(100% - 22px); /* Adjust for padding and border */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #0F0;
+    border-radius: 5px;
+    background-color: #333333;
+    color: #0F0;
+}
+
+#auth-section button,
+#money-tracker-dashboard button {
+    background-color: #0F0;
+    color: #333333;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-right: 10px;
+    transition: background-color 0.3s ease;
+}
+
+#auth-section button:hover,
+#money-tracker-dashboard button:hover {
+    background-color: #0CCC0C;
+}
+
+#auth-section p,
+#money-tracker-dashboard p {
+    text-align: center;
+    margin-top: 10px;
+    color: #ccc;
+}
+
+#auth-section a,
+#money-tracker-dashboard a {
+    color: #0F0;
+    text-decoration: none;
+}
+
+#auth-section a:hover,
+#money-tracker-dashboard a:hover {
+    text-decoration: underline;
+}
+
+#register-form, #login-form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #0F0;
+    border-radius: 10px;
+    background-color: #333333;
+}
+
+#money-tracker-dashboard section {
+    background-color: #333333;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    border: 1px solid #0F0;
+}
+
+#money-tracker-dashboard section h3 {
+    text-align: left;
+    margin-bottom: 15px;
+    color: #0F0;
+}
+
+#money-tracker-dashboard .edit-btn,
+#money-tracker-dashboard .delete-btn {
+    background-color: #0F0;
+    color: #333;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 0.8em;
+    margin-left: 5px;
+}
+
+#money-tracker-dashboard .delete-btn {
+    background-color: #CC0000;
+    color: white;
+}
+
+#money-tracker-dashboard .delete-btn:hover {
+    background-color: #FF0000;
+}
+
+#money-tracker-dashboard form {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px dashed #0F0;
+    border-radius: 5px;
+}
+
+#money-tracker-dashboard form button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+}
+
+#money-tracker-dashboard form button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+#money-tracker-dashboard div[id$="-list"] div {
+    background-color: #444;
+    border: 1px solid #0F0;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #ccc;
+}
+
+#money-tracker-dashboard div[id$="-list"] div p {
+    margin: 0;
+    text-align: left;
+    flex-grow: 1;
+}

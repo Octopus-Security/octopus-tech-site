@@ -1,12 +1,49 @@
 version: '3.8'
 services:
   octopus-web:
-    build: .              # <--- This tells it to use the Dockerfile
+    build: .
     container_name: octopus_site_internal
     restart: always
     networks:
       - web_proxy
+      - backend_network # Add backend_network for communication with the new backend
+
+  db:
+    image: postgres:13
+    container_name: money_tracker_db
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: money_tracker
+    ports:
+      - "5432:5432" # Expose DB port for local access, remove in production
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql # Initialize schema
+    networks:
+      - backend_network
+
+  backend:
+    build: ./backend
+    container_name: money_tracker_backend
+    restart: always
+    environment:
+      DATABASE_URL: postgresql://user:password@db:5432/money_tracker
+      JWT_SECRET: supersecretjwtkey
+      PORT: 3000
+    ports:
+      - "3000:3000" # Expose backend port
+    depends_on:
+      - db
+    networks:
+      - backend_network
 
 networks:
   web_proxy:
     external: true
+  backend_network:
+    driver: bridge
+
+volumes:
+  db_data:
