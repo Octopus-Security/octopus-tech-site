@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Octopus Technology — Apps</title>
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+  <style>
+    .apps-hero { text-align: center; padding: 60px 20px 30px; }
+    .apps-hero h1 { font-size: 2rem; margin-bottom: 10px; }
+    .apps-hero p { color: #aaa; }
+    .apps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    .app-card {
+      background: #161616;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 28px;
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .app-card:hover { border-color: #c84b31; transform: translateY(-2px); }
+    .app-card .icon { font-size: 2.5rem; margin-bottom: 14px; }
+    .app-card h2 { font-size: 1.2rem; margin-bottom: 8px; }
+    .app-card p { color: #888; font-size: 0.9rem; line-height: 1.6; margin: 0; }
+    .tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      background: #1e1e1e;
+      border: 1px solid #333;
+      border-radius: 4px;
+      padding: 2px 8px;
+      margin-top: 14px;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="topBar">
+    <div class="dropdown">
+      <button class="dropbtn">Menu</button>
+      <div class="dropdown-content">
+        <a href="index.html">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="contact.html">Contact</a>
+        <a href="about.html">About</a>
+        <a href="apps.html">Apps</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="apps-hero">
+    <h1>Octopus Apps</h1>
+    <p>Personal tools built by Octopus Technology</p>
+  </div>
+
+  <div class="apps-grid">
+
+    <a class="app-card" href="https://budget.octopustechnology.net" target="_blank" rel="noopener">
+      <div class="icon">💰</div>
+      <h2>Budget Tracker</h2>
+      <p>Track income, expenses, and subscriptions. Full history, categories, and monthly summaries.</p>
+      <span class="tag">Finance</span>
+    </a>
+
+    <a class="app-card" href="https://health.octopustechnology.net" target="_blank" rel="noopener">
+      <div class="icon">🏃</div>
+      <h2>Health Tracker</h2>
+      <p>Log workouts, meals, and health metrics. Build habits and track progress over time.</p>
+      <span class="tag">Health</span>
+    </a>
+
+    <a class="app-card" href="https://tools.octopustechnology.net" target="_blank" rel="noopener">
+      <div class="icon">🔧</div>
+      <h2>Octopus Tools</h2>
+      <p>A growing collection of browser-based utilities — speed reader, and more coming soon.</p>
+      <span class="tag">Tools</span>
+    </a>
+
+  </div>
+
+  <script src="scripts/main.js"></script>
+</body>
+</html>
