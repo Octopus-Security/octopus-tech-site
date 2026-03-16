@@ -7,17 +7,73 @@
   <link rel="stylesheet" href="styles/main.css">
   <link rel="icon" type="image/x-icon" href="images/favicon.ico">
   <style>
-    .apps-hero { text-align: center; padding: 60px 20px 30px; }
+    .apps-hero { text-align: center; padding: 60px 20px 20px; }
     .apps-hero h1 { font-size: 2rem; margin-bottom: 10px; }
-    .apps-hero p { color: #aaa; }
+    .apps-hero p { color: #aaa; margin: 0; }
+
+    /* Category filter bar */
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 24px 20px 0;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .filter-btn {
+      background: #1e1e1e;
+      border: 1px solid #333;
+      color: #aaa;
+      border-radius: 20px;
+      padding: 5px 16px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .filter-btn:hover { border-color: #c84b31; color: #fff; }
+    .filter-btn.active { border-color: #c84b31; color: #fff; background: #1a0e0b; }
+
+    /* Private unlock */
+    .private-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+      padding: 20px 20px 0;
+    }
+    .unlock-btn {
+      background: none;
+      border: 1px solid #444;
+      color: #666;
+      border-radius: 20px;
+      padding: 5px 16px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .unlock-btn:hover { border-color: #c84b31; color: #aaa; }
+    .unlock-input {
+      background: #1e1e1e;
+      border: 1px solid #333;
+      color: #fff;
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 0.8rem;
+      display: none;
+    }
+    .unlock-input.visible { display: inline-block; }
+
+    /* Grid */
     .apps-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 24px;
       max-width: 900px;
-      margin: 40px auto;
+      margin: 30px auto 60px;
       padding: 0 20px;
     }
+
     .app-card {
       background: #161616;
       border: 1px solid #2a2a2a;
@@ -29,9 +85,13 @@
       transition: border-color 0.2s, transform 0.2s;
     }
     .app-card:hover { border-color: #c84b31; transform: translateY(-2px); }
+    .app-card.hidden { display: none; }
+    .app-card.private-card { border-color: #2a2020; }
     .app-card .icon { font-size: 2.5rem; margin-bottom: 14px; }
     .app-card h2 { font-size: 1.2rem; margin-bottom: 8px; }
     .app-card p { color: #888; font-size: 0.9rem; line-height: 1.6; margin: 0; }
+
+    .card-footer { display: flex; align-items: center; gap: 8px; margin-top: 14px; }
     .tag {
       display: inline-block;
       font-size: 0.75rem;
@@ -39,9 +99,9 @@
       border: 1px solid #333;
       border-radius: 4px;
       padding: 2px 8px;
-      margin-top: 14px;
       color: #aaa;
     }
+    .lock-icon { font-size: 0.75rem; color: #555; margin-left: auto; }
   </style>
 </head>
 <body>
@@ -76,31 +136,123 @@
     <p>Personal tools built by Octopus Technology</p>
   </div>
 
-  <div class="apps-grid">
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="Finance">Finance</button>
+    <button class="filter-btn" data-filter="Health">Health</button>
+    <button class="filter-btn" data-filter="Tools">Tools</button>
+    <button class="filter-btn" data-filter="Security">Security</button>
+  </div>
 
-    <a class="app-card" href="https://budget.octopustechnology.net" target="_blank" rel="noopener">
+  <div class="private-bar">
+    <button class="unlock-btn" id="unlockBtn">🔒 Show private</button>
+    <input class="unlock-input" id="unlockInput" type="password" placeholder="PIN" maxlength="32" />
+  </div>
+
+  <div class="apps-grid" id="appsGrid">
+
+    <a class="app-card" data-category="Finance" href="https://budget.octopustechnology.net" target="_blank" rel="noopener">
       <div class="icon">💰</div>
       <h2>Budget Tracker</h2>
       <p>Track income, expenses, and subscriptions. Full history, categories, and monthly summaries.</p>
-      <span class="tag">Finance</span>
+      <div class="card-footer"><span class="tag">Finance</span></div>
     </a>
 
-    <a class="app-card" href="https://health.octopustechnology.net" target="_blank" rel="noopener">
+    <a class="app-card" data-category="Health" href="https://health.octopustechnology.net" target="_blank" rel="noopener">
       <div class="icon">🏃</div>
       <h2>Health Tracker</h2>
       <p>Log workouts, meals, and health metrics. Build habits and track progress over time.</p>
-      <span class="tag">Health</span>
+      <div class="card-footer"><span class="tag">Health</span></div>
     </a>
 
-    <a class="app-card" href="https://tools.octopustechnology.net" target="_blank" rel="noopener">
-      <div class="icon">🔧</div>
-      <h2>Octopus Tools</h2>
-      <p>A growing collection of browser-based utilities — speed reader, and more coming soon.</p>
-      <span class="tag">Tools</span>
+    <a class="app-card" data-category="Tools" href="https://tools.octopustechnology.net" target="_blank" rel="noopener">
+      <div class="icon">📖</div>
+      <h2>Speed Reader</h2>
+      <p>RSVP-style speed reader. Paste text or upload a PDF and read at up to 1000 WPM.</p>
+      <div class="card-footer"><span class="tag">Tools</span></div>
     </a>
+
+    <!-- Private cards — hidden until unlocked -->
+    <!-- Example private card (uncomment and fill in when ready):
+    <a class="app-card private-card" data-category="Security" data-private="true" href="https://scan.octopustechnology.net" target="_blank" rel="noopener">
+      <div class="icon">🔍</div>
+      <h2>Port Scanner</h2>
+      <p>Internal network port scanner.</p>
+      <div class="card-footer"><span class="tag">Security</span><span class="lock-icon">🔒</span></div>
+    </a>
+    -->
 
   </div>
 
   <script src="scripts/main.js"></script>
+  <script>
+    // ── Category filter ───────────────────────────────────────────────────────
+    const cards     = Array.from(document.querySelectorAll('.app-card'));
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    let activeFilter  = 'all';
+    let privateUnlocked = false;
+
+    function applyFilter() {
+      cards.forEach(card => {
+        const cat     = card.dataset.category;
+        const isPriv  = card.dataset.private === 'true';
+        const catMatch = activeFilter === 'all' || cat === activeFilter;
+        const privOk   = !isPriv || privateUnlocked;
+        card.classList.toggle('hidden', !(catMatch && privOk));
+      });
+    }
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeFilter = btn.dataset.filter;
+        applyFilter();
+      });
+    });
+
+    // ── Private unlock ────────────────────────────────────────────────────────
+    // PIN is stored as a SHA-256 hex hash below.
+    // To set a PIN, run in browser console: sha256('yourpin') and paste the result.
+    const PIN_HASH = ''; // set this to enable private cards
+
+    async function sha256(msg) {
+      const buf  = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(msg));
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    const unlockBtn   = document.getElementById('unlockBtn');
+    const unlockInput = document.getElementById('unlockInput');
+
+    unlockBtn.addEventListener('click', () => {
+      if (privateUnlocked) {
+        privateUnlocked = false;
+        unlockBtn.textContent = '🔒 Show private';
+        unlockInput.classList.remove('visible');
+        unlockInput.value = '';
+        applyFilter();
+        return;
+      }
+      if (!PIN_HASH) return; // no PIN set — private cards stay hidden
+      unlockInput.classList.toggle('visible');
+      if (unlockInput.classList.contains('visible')) unlockInput.focus();
+    });
+
+    unlockInput.addEventListener('keydown', async e => {
+      if (e.key !== 'Enter') return;
+      const hash = await sha256(unlockInput.value);
+      if (hash === PIN_HASH) {
+        privateUnlocked = true;
+        unlockBtn.textContent = '🔓 Hide private';
+        unlockInput.classList.remove('visible');
+        unlockInput.value = '';
+        applyFilter();
+      } else {
+        unlockInput.value = '';
+        unlockInput.placeholder = 'Wrong PIN';
+        setTimeout(() => unlockInput.placeholder = 'PIN', 1500);
+      }
+    });
+  </script>
 </body>
 </html>
