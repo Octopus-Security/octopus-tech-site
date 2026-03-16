@@ -8,8 +8,8 @@
   <link rel="icon" type="image/x-icon" href="images/favicon.ico">
   <style>
     .apps-hero { text-align: center; padding: 60px 20px 20px; }
-    .apps-hero h1 { font-size: 2rem; margin-bottom: 10px; }
-    .apps-hero p { color: #aaa; margin: 0; }
+    .apps-hero h1 { font-size: 2rem; margin-bottom: 10px; color: #e8e8e8; }
+    .apps-hero p { color: #888; margin: 0; }
 
     /* Category filter bar */
     .filter-bar {
@@ -22,17 +22,17 @@
       margin: 0 auto;
     }
     .filter-btn {
-      background: #1e1e1e;
-      border: 1px solid #333;
-      color: #aaa;
+      background: #111;
+      border: 1px solid #252525;
+      color: #888;
       border-radius: 20px;
       padding: 5px 16px;
       font-size: 0.8rem;
       cursor: pointer;
       transition: border-color 0.2s, color 0.2s;
     }
-    .filter-btn:hover { border-color: #c84b31; color: #fff; }
-    .filter-btn.active { border-color: #c84b31; color: #fff; background: #1a0e0b; }
+    .filter-btn:hover { border-color: #2ecc71; color: #d4d4d4; }
+    .filter-btn.active { border-color: #2ecc71; color: #2ecc71; background: #0d1f13; }
 
     /* Private unlock */
     .private-bar {
@@ -44,19 +44,19 @@
     }
     .unlock-btn {
       background: none;
-      border: 1px solid #444;
-      color: #666;
+      border: 1px solid #252525;
+      color: #555;
       border-radius: 20px;
       padding: 5px 16px;
       font-size: 0.8rem;
       cursor: pointer;
       transition: border-color 0.2s, color 0.2s;
     }
-    .unlock-btn:hover { border-color: #c84b31; color: #aaa; }
+    .unlock-btn:hover { border-color: #2ecc71; color: #888; }
     .unlock-input {
-      background: #1e1e1e;
-      border: 1px solid #333;
-      color: #fff;
+      background: #111;
+      border: 1px solid #252525;
+      color: #d4d4d4;
       border-radius: 6px;
       padding: 4px 10px;
       font-size: 0.8rem;
@@ -75,8 +75,8 @@
     }
 
     .app-card {
-      background: #161616;
-      border: 1px solid #2a2a2a;
+      background: #111;
+      border: 1px solid #1e1e1e;
       border-radius: 12px;
       padding: 28px;
       text-decoration: none;
@@ -84,24 +84,24 @@
       display: block;
       transition: border-color 0.2s, transform 0.2s;
     }
-    .app-card:hover { border-color: #c84b31; transform: translateY(-2px); }
+    .app-card:hover { border-color: #2ecc71; transform: translateY(-2px); }
     .app-card.hidden { display: none; }
-    .app-card.private-card { border-color: #2a2020; }
+    .app-card.private-card { border-color: #1a2a1a; }
     .app-card .icon { font-size: 2.5rem; margin-bottom: 14px; }
-    .app-card h2 { font-size: 1.2rem; margin-bottom: 8px; }
+    .app-card h2 { font-size: 1.2rem; margin-bottom: 8px; color: #e8e8e8; }
     .app-card p { color: #888; font-size: 0.9rem; line-height: 1.6; margin: 0; }
 
     .card-footer { display: flex; align-items: center; gap: 8px; margin-top: 14px; }
     .tag {
       display: inline-block;
       font-size: 0.75rem;
-      background: #1e1e1e;
-      border: 1px solid #333;
+      background: #0d1f13;
+      border: 1px solid #2a5c3a;
       border-radius: 4px;
       padding: 2px 8px;
-      color: #aaa;
+      color: #2ecc71;
     }
-    .lock-icon { font-size: 0.75rem; color: #555; margin-left: auto; }
+    .lock-icon { font-size: 0.75rem; color: #444; margin-left: auto; }
   </style>
 </head>
 <body>
