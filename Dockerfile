@@ -1,5 +1,7 @@
 # Use the lightweight Nginx image
-FROM nginx:1.21.0-alpine
+FROM nginx:alpine
+
+RUN apk upgrade --no-cache
 
 # Remove the default Nginx welcome page
 RUN rm -rf /usr/share/nginx/html/*
