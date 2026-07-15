@@ -91,7 +91,7 @@
     .app-card h2 { font-size: 1.2rem; margin-bottom: 8px; color: #e8e8e8; }
     .app-card p { color: #888; font-size: 0.9rem; line-height: 1.6; margin: 0; }
 
-    .card-footer { display: flex; align-items: center; gap: 8px; margin-top: 14px; }
+    .card-footer { display: flex; align-items: center; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
     .tag {
       display: inline-block;
       font-size: 0.75rem;
@@ -101,7 +101,36 @@
       padding: 2px 8px;
       color: #2ecc71;
     }
-    .lock-icon { font-size: 0.75rem; color: #444; margin-left: auto; }
+    /* Access badges — the "what's public and what's not" indicator */
+    .access {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.72rem;
+      border-radius: 4px;
+      padding: 2px 8px;
+      margin-left: auto;
+    }
+    .access.open    { background: #0d1f13; border: 1px solid #2a5c3a; color: #2ecc71; }
+    .access.account { background: #101a2a; border: 1px solid #274a72; color: #5a9bd8; }
+    .access.private { background: #1a1a1a; border: 1px solid #333;    color: #888;    }
+    .lock-icon { font-size: 0.75rem; color: #444; }
+
+    /* Access legend under the hero */
+    .legend {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 6px 20px 0;
+      color: #666;
+      font-size: 0.78rem;
+    }
+    .legend span { display: inline-flex; align-items: center; gap: 5px; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+    .dot.open { background: #2ecc71; }
+    .dot.account { background: #5a9bd8; }
+    .dot.private { background: #888; }
   </style>
 </head>
 <body>
@@ -136,10 +165,18 @@
     <p>Personal tools built by Octopus Technology</p>
   </div>
 
+  <div class="legend">
+    <span><span class="dot open"></span> Open — no account needed</span>
+    <span><span class="dot account"></span> Account — sign in to use</span>
+    <span><span class="dot private"></span> Private — personal / invite only</span>
+  </div>
+
   <div class="filter-bar">
     <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="Games">Games</button>
     <button class="filter-btn" data-filter="Finance">Finance</button>
     <button class="filter-btn" data-filter="Health">Health</button>
+    <button class="filter-btn" data-filter="AI">AI</button>
     <button class="filter-btn" data-filter="Tools">Tools</button>
     <button class="filter-btn" data-filter="Security">Security</button>
   </div>
@@ -151,50 +188,69 @@
 
   <div class="apps-grid" id="appsGrid">
 
+    <a class="app-card" data-category="Games" href="https://games.octopustechnology.net" target="_blank" rel="noopener">
+      <div class="icon">🎮</div>
+      <h2>Octopus Games</h2>
+      <p>Arcade games plus a live directory of our Terraria / Minecraft servers. Browse public servers free; sign in for connection details and access.</p>
+      <div class="card-footer"><span class="tag">Games</span><span class="access open">● Open</span></div>
+    </a>
+
     <a class="app-card" data-category="Finance" href="https://budget.octopustechnology.net" target="_blank" rel="noopener">
       <div class="icon">💰</div>
       <h2>Budget Tracker</h2>
       <p>Track income, expenses, and subscriptions. Full history, categories, and monthly summaries.</p>
-      <div class="card-footer"><span class="tag">Finance</span></div>
+      <div class="card-footer"><span class="tag">Finance</span><span class="access account">● Account</span></div>
     </a>
 
     <a class="app-card" data-category="Health" href="https://health.octopustechnology.net" target="_blank" rel="noopener">
       <div class="icon">🏃</div>
       <h2>Health Tracker</h2>
       <p>Log workouts, meals, and health metrics. Build habits and track progress over time.</p>
-      <div class="card-footer"><span class="tag">Health</span></div>
+      <div class="card-footer"><span class="tag">Health</span><span class="access account">● Account</span></div>
+    </a>
+
+    <a class="app-card" data-category="AI" href="https://chat.octopustechnology.net" target="_blank" rel="noopener">
+      <div class="icon">🧠</div>
+      <h2>Octopus Chat</h2>
+      <p>Multi-agent AI workspace — chat, notes, and assistants. Sign in required; bring your own key or use credits.</p>
+      <div class="card-footer"><span class="tag">AI</span><span class="access account">● Account</span></div>
+    </a>
+
+    <a class="app-card" data-category="Health" href="https://mma.octopustechnology.net" target="_blank" rel="noopener">
+      <div class="icon">🥋</div>
+      <h2>MMA Training</h2>
+      <p>Mixed-martial-arts training reference and technique breakdowns.</p>
+      <div class="card-footer"><span class="tag">Health</span><span class="access open">● Open</span></div>
     </a>
 
     <a class="app-card" data-category="Tools" href="https://tools.octopustechnology.net/speed-reader.html" target="_blank" rel="noopener">
       <div class="icon">📖</div>
       <h2>Speed Reader</h2>
       <p>RSVP-style speed reader. Paste text or upload a PDF and read at up to 1000 WPM.</p>
-      <div class="card-footer"><span class="tag">Tools</span></div>
+      <div class="card-footer"><span class="tag">Tools</span><span class="access open">● Open</span></div>
     </a>
 
     <a class="app-card" data-category="Tools" href="https://tools.octopustechnology.net/hash.html" target="_blank" rel="noopener">
       <div class="icon">#️⃣</div>
       <h2>Hash Generator</h2>
       <p>Compute MD5, SHA-1, SHA-256, SHA-384, and SHA-512 hashes instantly in your browser.</p>
-      <div class="card-footer"><span class="tag">Tools</span></div>
+      <div class="card-footer"><span class="tag">Tools</span><span class="access open">● Open</span></div>
     </a>
 
     <a class="app-card" data-category="Tools" href="https://tools.octopustechnology.net/baseconv.html" target="_blank" rel="noopener">
       <div class="icon">🔢</div>
       <h2>Base Converter</h2>
       <p>Convert numbers between binary, octal, decimal, hex, or any custom base up to 36.</p>
-      <div class="card-footer"><span class="tag">Tools</span></div>
+      <div class="card-footer"><span class="tag">Tools</span><span class="access open">● Open</span></div>
     </a>
 
-    <!-- Private cards — hidden until unlocked -->
-    <!-- Example private card (uncomment and fill in when ready):
-    <a class="app-card private-card" data-category="Security" data-private="true" href="https://scan.octopustechnology.net" target="_blank" rel="noopener">
-      <div class="icon">🔍</div>
-      <h2>Port Scanner</h2>
-      <p>Internal network port scanner.</p>
-      <div class="card-footer"><span class="tag">Security</span><span class="lock-icon">🔒</span></div>
+    <!-- Private cards — hidden until a PIN is set + entered (see PIN_HASH below) -->
+    <a class="app-card private-card" data-category="Security" data-private="true" href="https://pass.octopustechnology.net" target="_blank" rel="noopener">
+      <div class="icon">🔐</div>
+      <h2>Password Vault</h2>
+      <p>Self-hosted Vaultwarden password manager. Personal — invite only.</p>
+      <div class="card-footer"><span class="tag">Security</span><span class="access private">● Private</span><span class="lock-icon">🔒</span></div>
     </a>
-    -->
 
   </div>
 
