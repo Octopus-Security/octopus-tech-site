@@ -270,3 +270,65 @@ ul { list-style-type: none; padding-left: 0; }
 
     .project-card { width: 100%; }
 }
+
+/* ── Project cards, long form ───────────────────────────────
+   The original card is a 300px centred tile, which is right for "Alfred — a
+   Discord bot" and wrong for anything with a paragraph in it: centred prose is
+   hard to read and 300px turns two sentences into a column. These are wide,
+   left-aligned and capped at a comfortable measure. */
+.page-intro { margin-bottom: 28px; }
+.page-intro h1 { margin-bottom: 8px; }
+.page-intro p  { max-width: 62ch; }
+
+.project-cards { align-items: stretch; }
+
+.project-card-wide {
+    width: 100%;
+    max-width: 760px;
+    text-align: left;
+    align-items: flex-start;
+    padding: 26px 30px;
+}
+
+.project-card-wide h3 { font-size: 1.25rem; margin-bottom: 6px; }
+
+.card-blurb {
+    color: #d4d4d4 !important;
+    font-size: 1.02rem;
+    margin: 0 0 14px !important;
+}
+
+/* ~68 characters is about the limit before the eye loses the line start. */
+.card-detail p {
+    max-width: 68ch;
+    margin: 0 0 12px;
+    color: #9a9a9a;
+    font-size: 0.95rem;
+}
+.card-detail p:last-child { margin-bottom: 0; }
+
+.card-highlights {
+    margin: 16px 0 4px;
+    padding-left: 18px;
+    color: #b4b4b4;
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+.card-highlights li::marker { color: #2ecc71; }
+
+.card-meta {
+    color: #6f6f6f !important;
+    font-size: 0.82rem;
+    margin: 14px 0 0 !important;
+    font-variant-numeric: tabular-nums;
+}
+
+.project-card-wide .languages { margin: 16px 0 0; }
+.project-card-wide .languages span { margin: 0 6px 0 0; display: inline-block; }
+.project-card-wide .repo-link { margin-top: 16px; }
+
+@media (max-width: 700px) {
+    .content-container { width: 92%; padding: 5% 4%; }
+    .project-card-wide { padding: 20px 18px; }
+    .card-detail p, .page-intro p { max-width: none; }
+}
