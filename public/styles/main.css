@@ -14,10 +14,57 @@ body.tiled-bg {
     background-size: 100px;
 }
 
-/* ── Typography ─────────────────────────────────────────────── */
-h1, h2, h3, h4, h5 { color: #e8e8e8; margin-top: 0; }
+/* ── Typography ─────────────────────────────────────────────────
+   There was no type scale: h1 through h5 shared one rule, so they fell back to
+   browser defaults and the hierarchy came out flat and partly inverted — an h5
+   renders at 0.83em, which made "Connect with Element:" SMALLER than the body
+   text it introduced, and h4 lands at exactly body size so section headings did
+   not read as headings at all.
 
-p { color: #aaa; line-height: 1.65; }
+   A scale with real steps, and space ABOVE each heading so a section is visibly
+   attached to its own content rather than jammed under the previous one. */
+h1, h2, h3, h4, h5, h6 {
+    color: #e8e8e8;
+    line-height: 1.25;
+    margin: 0 0 0.5em;
+    font-weight: 600;
+}
+
+h1 { font-size: 1.9rem;  letter-spacing: -0.01em; }
+h2 { font-size: 1.35rem; }
+h3 { font-size: 1.1rem; }
+h4 { font-size: 0.95rem; color: #d0d0d0; }
+h5 { font-size: 0.85rem; color: #a8a8a8; text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* Space above a heading, except where it opens a block — a heading belongs to
+   what follows it, so the gap goes on top. */
+h2 { margin-top: 1.9em; }
+h3 { margin-top: 1.6em; }
+h4, h5 { margin-top: 1.5em; }
+:where(.content-container, .card-detail, li, section) > :is(h1,h2,h3,h4,h5):first-child { margin-top: 0; }
+
+p { color: #aaa; line-height: 1.7; margin: 0 0 1em; }
+p:last-child { margin-bottom: 0; }
+
+/* Long lines are the single biggest thing making a page feel amateur: the
+   container is ~1500px on a desktop, and the eye loses its place returning to
+   the start of the next line well before that. */
+.content-container p,
+.content-container li { max-width: 68ch; }
+
+strong { color: #d4d4d4; font-weight: 600; }
+
+/* Inline literals were completely unstyled, so a hostname read as plain prose. */
+code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 0.88em;
+    background: #141414;
+    border: 1px solid #222;
+    border-radius: 4px;
+    padding: 0.12em 0.4em;
+    color: #b8dcc4;
+    white-space: nowrap;
+}
 
 a {
     color: #2ecc71;
@@ -373,4 +420,56 @@ ul { list-style-type: none; padding-left: 0; }
 
 @media (max-width: 700px) {
     .article-body p, .article-standfirst { max-width: none; }
+}
+
+/* ── Contact ────────────────────────────────────────────────
+   The old markup nested everything in an <ul> with heading levels running
+   h3 → h4 → h5, which put the smallest text on the most important label. This
+   is flat sections with a real hierarchy. */
+.contact-info { max-width: 68ch; }
+.contact-section + .contact-section {
+    margin-top: 34px;
+    padding-top: 30px;
+    border-top: 1px solid #1c1c1c;
+}
+
+.link-list { list-style: none; padding: 0; margin: 0; }
+.link-list li { margin-bottom: 8px; }
+.link-list a {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 7px 12px;
+    background: #141414;
+    border: 1px solid #222;
+    border-radius: 8px;
+    transition: border-color 0.15s, background 0.15s;
+}
+.link-list a:hover { border-color: #2a5c3a; background: #161b17; }
+.link-list .github-logo { height: 1.15em; opacity: 0.85; }
+
+/* The handle is the thing people came for, so give it room to be read and
+   selected rather than burying it mid-sentence. */
+.contact-id { margin-bottom: 0.4em; }
+.contact-id code {
+    font-size: 0.95em;
+    padding: 0.45em 0.7em;
+    user-select: all;
+    white-space: normal;
+    word-break: break-all;
+}
+
+/* Label/description pairs read better than three near-identical sentences. */
+.steps { margin: 14px 0 0; }
+.steps dt {
+    color: #2ecc71;
+    font-weight: 600;
+    font-size: 0.88rem;
+    margin-top: 14px;
+}
+.steps dt:first-child { margin-top: 0; }
+.steps dd { margin: 4px 0 0; color: #aaa; line-height: 1.6; }
+
+@media (max-width: 700px) {
+    .contact-info, .content-container p, .content-container li { max-width: none; }
 }
