@@ -1,0 +1,171 @@
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+            The guard I wrote to prevent an outage — Octopus Technology
+        </title>
+        <link rel="stylesheet" href="../styles/main.css">
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+    </head>
+
+    <body>
+
+        <div class="topBar">
+            <div class="dropdown">
+                <button class="dropbtn">Menu</button>
+                <div class="dropdown-content">
+                    <a href="../index.html">Home</a>
+                    <a href="../projects.html">Projects</a>
+                    <a href="../writing.html">Writing</a>
+                    <a href="../contact.html">Contact</a>
+                    <a href="../about.html">About</a>
+                    <a href="../apps.html">Apps</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-container article">
+            <div class="page-intro">
+                <p class="article-kicker"><a href="../writing.html">← Writing</a></p>
+                <h1>The guard I wrote to prevent an outage</h1>
+                <p class="article-standfirst">
+                    I added a startup check so a half-configured migration could not take the estate
+                    down. The check was right about the danger and wrong about the remedy, and the
+                    information it needed was inside the key it was refusing to start without.
+                </p>
+            </div>
+
+            <div class="card-detail article-body">
+                <h2>The migration</h2>
+                <p>
+                    Sessions were signed HS256 with a shared secret. That is fine until you count
+                    who holds the secret: six services, five of which only ever need to
+                    <em>check</em> a token. With a symmetric algorithm the key that verifies also
+                    mints, so compromising the least important service on the estate would let you
+                    forge an admin session for all of it.
+                </p>
+                <p>
+                    RS256 splits those capabilities. Auth holds the private key and is the only
+                    thing that can issue a session; everything else holds the public key and can
+                    only verify. Straightforward, except you cannot switch a live estate
+                    atomically — a seven-day session issued yesterday has to keep working. So
+                    verification accepts every key it holds, both algorithms at once, and the old
+                    secret retires on its own after a week.
+                </p>
+
+                <h2>The thing I was right to worry about</h2>
+                <p>
+                    Auth does not only sign tokens. It verifies them too — six separate places: the
+                    cookie reader, the verify endpoint, the refresh endpoint, the enrolment and
+                    challenge routes, the session endpoint.
+                </p>
+                <p>
+                    If signing moved to RS256 while verification stayed on the old secret, auth
+                    would mint tokens and then reject its own. Every session invalid at once. The
+                    login page would issue a token that failed on the next request. Every app on
+                    the estate goes down together, and the cause is one variable on one stack.
+                </p>
+                <p>
+                    So I wrote a startup check: if the private key is present and the public key is
+                    not, refuse to start.
+                </p>
+
+                <h2>Why that was the wrong remedy</h2>
+                <p>
+                    It converts a half-finished migration into an outage.
+                </p>
+                <p>
+                    Worse, it does so at exactly the moment someone is midway through the rollout I
+                    had written — the instructions say public key everywhere first, private key
+                    second, and the failure fires precisely when you have done step two and are
+                    about to do step one on the remaining stacks. The guard triggers during the
+                    normal, expected, transient state of following the procedure.
+                </p>
+                <p>
+                    And auth going down is not one service going down. It is the login provider for
+                    everything, so it is all of them.
+                </p>
+
+                <h2>The information was already there</h2>
+                <p>
+                    An RSA private key <em>contains</em> its public key. It is derivable in one
+                    call:
+                </p>
+                <pre class="code-block">crypto.createPublicKey(privateKey)
+    .export({ type: 'spki', format: 'pem' })</pre>
+                <p>
+                    Auth never needed to be told. The state the guard was protecting against —
+                    signing something it cannot verify — cannot arise, because it can always work
+                    out the other half of its own keypair. The derived key goes first in the list,
+                    ahead of anything configured, since it is the only one guaranteed to be the
+                    matching half.
+                </p>
+                <p>
+                    The warning stayed, but it now says the true thing. The service at risk was
+                    never auth. It is the <em>other</em> services, which verify locally and cannot
+                    derive anything — until the public key reaches them, they reject every session
+                    the moment auth switches. That is worth a loud message. It is not worth
+                    refusing to boot.
+                </p>
+
+                <h2>A second mistake, ten minutes later</h2>
+                <p>
+                    Auth then returned 502, and I was confident I knew why: I had just changed the
+                    startup path, so the startup path was the cause.
+                </p>
+                <p>
+                    It was Cloudflare.
+                </p>
+                <p>
+                    The recent change is the first suspect and usually the right one, which is
+                    exactly what makes it worth checking rather than assuming. I had a plausible
+                    mechanism and a matching symptom, and that felt like enough. The actual
+                    evidence — container logs — would have taken thirty seconds and pointed
+                    somewhere else entirely.
+                </p>
+
+                <h2>What I took from it</h2>
+                <p>
+                    <strong>A guard that refuses to run is only correct if not running is safer
+                    than the state it prevents.</strong> I never checked that comparison. Signing
+                    unverifiable tokens is bad; auth being down is also bad, and it is bad
+                    <em>immediately and completely</em>. I had traded a hypothetical for a certainty.
+                </p>
+                <p>
+                    <strong>Before you require configuration, check whether you can derive it.</strong>
+                    A required setting is a thing that can be forgotten, typo'd, or set on the wrong
+                    stack. The best fix for a footgun is usually to remove the trigger rather than
+                    to detect it.
+                </p>
+                <p>
+                    <strong>Design for the transient state.</strong> I wrote a careful ordered
+                    rollout and then added a check that fires in the middle of it. If a procedure
+                    has intermediate states, those are real states the system will occupy, and they
+                    deserve as much thought as the endpoints.
+                </p>
+                <p>
+                    <strong>A plausible cause is not a diagnosis.</strong> Especially when it is
+                    your own most recent change.
+                </p>
+                <p>
+                    The whole flow is now covered by tests running under the exact configuration
+                    that broke it: private key present, public key absent — sign in, verify, cookie,
+                    account page, refresh, revoke. Deriving the key weakens nothing; a token signed
+                    by a different private key is still rejected, and week-old sessions on the old
+                    algorithm still verify.
+                </p>
+            </div>
+        </div>
+
+        <div class="bottom">
+            <center>
+                <img id="otlogo" src="../images/octopusTech.png"/>
+                <p><a href="https://github.com/anonymous14386">Fork me on GitHub!&nbsp;<img src="../images/githubLogo.png" class="github-logo"/></a></p>
+            </center>
+        </div>
+
+    </body>
+
+</html>

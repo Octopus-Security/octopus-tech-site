@@ -1,0 +1,107 @@
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+            Writing — Octopus Technology
+        </title>
+        <link rel="stylesheet" href="styles/main.css">
+        <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    </head>
+
+    <body>
+
+        <div class="topBar">
+            <div class="dropdown">
+                <button class="dropbtn">Menu</button>
+                <div class="dropdown-content">
+                    <a href="index.html">Home</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="writing.html">Writing</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="about.html">About</a>
+                    <a href="apps.html">Apps</a>
+                </div>
+            </div>
+            <div class="nav-buttons-container">
+                <div class="extra-buttons">
+                    <button class="lizardButton">🦎</button>
+                    <button class="ratButton">🐀</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-container">
+            <div class="page-intro">
+                <h1>Writing</h1>
+                <p>
+                    Mostly post-mortems on my own mistakes. Running the whole estate means being
+                    the person who gets paged, and the failures have taught me more than the
+                    features did.
+                </p>
+            </div>
+
+            <div class="project-cards">
+                <article class="project-card project-card-wide">
+                    <h3><a href="writing/locked-out.html">Locked out of my own auth service</a></h3>
+                    <p class="card-blurb">
+                        Five mistyped passwords, a permanent IP ban, and no way back except root
+                        SSH. Twice in ten minutes.
+                    </p>
+                    <div class="card-detail">
+                        <p>
+                            Every individual control was defensible — generic errors to prevent
+                            username enumeration, rate limiting, no secrets in logs. Stacked, they
+                            produced a failure that was total, permanent and silent, with a recovery
+                            path that assumed I still had root on the box.
+                        </p>
+                    </div>
+                    <ul class="card-highlights">
+                        <li>Why the error was undiagnosable from both ends at once</li>
+                        <li>How the mail server quietly became load-bearing</li>
+                        <li>Recovery that does not depend on the thing that is down</li>
+                    </ul>
+                    <a href="writing/locked-out.html" class="repo-link">Read it</a>
+                </article>
+
+                <article class="project-card project-card-wide">
+                    <h3><a href="writing/guard-caused-the-outage.html">The guard I wrote to prevent an outage</a></h3>
+                    <p class="card-blurb">
+                        A startup check meant to stop a half-configured migration from taking
+                        everything down. It caused the outage instead.
+                    </p>
+                    <div class="card-detail">
+                        <p>
+                            Moving session signing from a shared secret to asymmetric keys, on a live
+                            estate, without logging anyone out. The check was right about the danger
+                            and wrong about the remedy — and the information it demanded was already
+                            inside the key it was refusing to start without.
+                        </p>
+                    </div>
+                    <ul class="card-highlights">
+                        <li>Why a symmetric signing key is a privilege problem</li>
+                        <li>When refusing to start is worse than the state it prevents</li>
+                        <li>Misdiagnosing the next outage as my own change</li>
+                    </ul>
+                    <a href="writing/guard-caused-the-outage.html" class="repo-link">Read it</a>
+                </article>
+            </div>
+        </div>
+
+        <div class="bottom">
+            <center>
+                <img id="otlogo" src="images/octopusTech.png"/>
+                <p><a href="https://github.com/anonymous14386">Fork me on GitHub!&nbsp;<img src="images/githubLogo.png" class="github-logo"/></a></p>
+                <p><a href="https://github.com/mutablefigment">Fork mutable on GitHub!&nbsp;<img src="images/githubLogo.png" class="github-logo"/></a></p>
+            </center>
+        </div>
+
+        <audio id="lizardSound" src="resources/lizard-button.mp3" preload="auto"></audio>
+        <audio id="ratSound" src="resources/lizard-button.mp3" preload="auto"></audio>
+
+        <script src="scripts/main.js"></script>
+
+    </body>
+
+</html>

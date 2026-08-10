@@ -1,0 +1,163 @@
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+            Locked out of my own auth service — Octopus Technology
+        </title>
+        <link rel="stylesheet" href="../styles/main.css">
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+    </head>
+
+    <body>
+
+        <div class="topBar">
+            <div class="dropdown">
+                <button class="dropbtn">Menu</button>
+                <div class="dropdown-content">
+                    <a href="../index.html">Home</a>
+                    <a href="../projects.html">Projects</a>
+                    <a href="../writing.html">Writing</a>
+                    <a href="../contact.html">Contact</a>
+                    <a href="../about.html">About</a>
+                    <a href="../apps.html">Apps</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-container article">
+            <div class="page-intro">
+                <p class="article-kicker"><a href="../writing.html">← Writing</a></p>
+                <h1>Locked out of my own auth service</h1>
+                <p class="article-standfirst">
+                    Five mistyped passwords, a permanent ban, and no way back in except root SSH.
+                    Twice in ten minutes. Every individual decision was defensible; together they
+                    built a door that only locks from the inside.
+                </p>
+            </div>
+
+            <div class="card-detail article-body">
+                <h2>What happened</h2>
+                <p>
+                    I mistyped my password. My password manager had a stale entry and I did not
+                    notice, so I tried again, and again. On the fifth failure the auth service
+                    banned my IP address — permanently, with no expiry — and started refusing the
+                    correct password too.
+                </p>
+                <p>
+                    The only way out was to SSH into the box as root and delete a row from SQLite.
+                    I did that. Then, ten minutes later, I did it again.
+                </p>
+                <p>
+                    This is a brute-force protection working exactly as designed, against the one
+                    user it should never stop.
+                </p>
+
+                <h2>Why it was impossible to diagnose</h2>
+                <p>
+                    Here is the part I find more interesting than the ban itself. The login form
+                    returns a deliberately generic error — <em>credentials or 2FA incorrect</em> —
+                    and it should. If a failed login tells you <em>no such user</em>, you have
+                    handed an attacker a way to enumerate accounts.
+                </p>
+                <p>
+                    But nothing was written to the server log either. So the real reason existed
+                    <strong>nowhere</strong>. Not in the browser, by design, and not on the
+                    machine, by omission. Five failures produced a permanent ban and no way to
+                    find out what had actually gone wrong.
+                </p>
+                <p>
+                    That gap mattered more than it sounds, because two very different failures look
+                    identical from the browser: <em>wrong password</em>, and <em>password correct
+                    but the 2FA code was missing</em>. With a password manager involved, those have
+                    completely different causes and completely different fixes. I could not tell
+                    them apart, so I kept trying the thing that was already right.
+                </p>
+
+                <h2>The compounding part</h2>
+                <p>
+                    No single decision here was wrong. Generic errors prevent enumeration.
+                    Rate-limiting stops credential stuffing. Not logging secrets is basic hygiene.
+                    Each one is what you would write on a whiteboard.
+                </p>
+                <p>
+                    Stacked, they produced a system where the failure mode is total, permanent, and
+                    silent — and the recovery path assumed I still had root SSH, which is exactly
+                    the assumption you cannot make about the general case. There is no version of
+                    "have you tried SSHing into the server" that works for a normal user.
+                </p>
+                <p>
+                    I had also, without ever deciding to, made the mail server a dependency of
+                    account recovery. There was no email reset because the mail service was down —
+                    and had been for a while, harmlessly, right up until the moment it was the only
+                    way back into everything.
+                </p>
+
+                <h2>What I changed</h2>
+                <p>
+                    <strong>Bans expire.</strong> Fifteen minutes by default. Brute-force protection
+                    does not need to be permanent to work: five tries and a cooling-off period costs
+                    an attacker everything and costs the owner fifteen minutes. The message now says
+                    how long is left, instead of sounding final.
+                </p>
+                <p>
+                    <strong>The reason is logged server-side.</strong> No such user, wrong password,
+                    or password correct with the 2FA code missing or wrong. The client still learns
+                    nothing — enumeration resistance is intact — but the answer now exists somewhere
+                    a person can read it.
+                </p>
+                <p>
+                    <strong>Trusted addresses are never banned.</strong> Loopback, RFC1918, and the
+                    Tailscale CGNAT range. Traffic from there is already inside the perimeter, and
+                    banning it locks the operator out of the machine they would use to lift the ban.
+                </p>
+                <p>
+                    <strong>Recovery that does not depend on email.</strong> Enrolling in two-factor
+                    now issues ten single-use recovery codes. One works anywhere an authenticator
+                    code is asked for, and one authorises a self-service password reset. Possession
+                    of the second factor stands in for "you control the registered address", because
+                    there is no registered address to control.
+                </p>
+                <p>
+                    That last one has a deliberate limit: an account with 2FA disabled gets no
+                    self-service reset at all. There would be nothing to check, and a username alone
+                    is not a credential.
+                </p>
+
+                <h2>What I took from it</h2>
+                <p>
+                    <strong>A security control needs an escape hatch that does not require the
+                    thing it is protecting.</strong> "Fail closed" is correct, but a system that
+                    fails closed with no way back has not failed safely — it has just failed.
+                </p>
+                <p>
+                    <strong>Refusing to tell the user is not a reason to refuse to tell yourself.</strong>
+                    Enumeration resistance is about what crosses the network boundary. I had
+                    conflated "the client must not learn this" with "this must not be recorded",
+                    and they are not the same statement.
+                </p>
+                <p>
+                    <strong>Watch what quietly becomes load-bearing.</strong> The mail server being
+                    down was a known, tolerated, low-priority problem. It stayed that way right up
+                    until it was the only path to account recovery, at which point it had been
+                    critical for weeks without anyone deciding it was.
+                </p>
+                <p>
+                    The lockout cost me an evening. The interesting part is that I had written every
+                    one of those controls on purpose, and still built a door that only locks from
+                    the inside.
+                </p>
+            </div>
+        </div>
+
+        <div class="bottom">
+            <center>
+                <img id="otlogo" src="../images/octopusTech.png"/>
+                <p><a href="https://github.com/anonymous14386">Fork me on GitHub!&nbsp;<img src="../images/githubLogo.png" class="github-logo"/></a></p>
+            </center>
+        </div>
+
+    </body>
+
+</html>
