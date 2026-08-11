@@ -64,6 +64,35 @@ for (const file of htmlFiles(PUBLIC).sort()) {
   }
 }
 
+// ── The apps grid ─────────────────────────────────────────────────────────────
+//
+// Same failure shape as the lizard: a card with a category that has no filter
+// button renders fine and looks correct, right up until someone clicks a filter
+// — then it disappears and cannot be reached by any combination of clicks. A
+// button with no cards is the mirror image, filtering the grid to nothing.
+// Neither throws, and neither is visible on the default "All" view, which is
+// the one you check after editing.
+{
+  const src = readFileSync(join(PUBLIC, 'apps.html'), 'utf8');
+  const cats = new Set([...src.matchAll(/data-category="([^"]+)"/g)].map(m => m[1]));
+  const filters = new Set([...src.matchAll(/data-filter="([^"]+)"/g)].map(m => m[1]));
+  filters.delete('all');
+
+  for (const c of cats) {
+    if (!filters.has(c)) problems.push(`apps.html: category "${c}" has cards but no filter button`);
+  }
+  for (const f of filters) {
+    if (!cats.has(f)) problems.push(`apps.html: filter button "${f}" matches no cards`);
+  }
+
+  // Every card should point somewhere, and the estate's own links should use the
+  // real subdomain — author is at write.…, planner at plan.…, and guessing from
+  // the repo name gives you a host that does not resolve.
+  for (const m of src.matchAll(/<a class="app-card[^"]*"[^>]*href="([^"]*)"/g)) {
+    if (!/^https?:\/\/\S+/.test(m[1])) problems.push(`apps.html: card with a non-absolute href "${m[1]}"`);
+  }
+}
+
 if (problems.length) {
   console.error('Page checks failed:');
   for (const p of problems) console.error(`  ${p}`);
