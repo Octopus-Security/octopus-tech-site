@@ -42,7 +42,7 @@
             <div class="page-intro">
                 <h1>Things I've built</h1>
                 <p>
-                    Mostly one self-hosted estate: a dozen or so services behind a single sign-on
+                    Mostly one self-hosted estate: close to thirty services behind a single sign-on
                     provider, on hardware I run. The short version of each is what it does; the
                     longer version is why it was harder than it looks.
                 </p>
@@ -52,7 +52,7 @@
       <div class="project-cards">
         <article class="project-card project-card-wide">
           <h3>Octopus Auth</h3>
-          <p class="card-blurb">Single sign-on for a dozen self-hosted services — TOTP, recovery codes, and revocable sessions.</p>
+          <p class="card-blurb">Single sign-on for every service on the estate — TOTP, recovery codes, and revocable sessions.</p>
           <div class="card-detail">
             <p>Every app behind one login. Two-factor is mandatory and enforced at enrolment, so an account cannot exist without it. Sessions are revocable without storing a single token: each one carries the epoch it was minted under, and bumping a counter on the user orphans all of them at once — no session table, no denylist to prune.</p>
             <p>Signing moved from a shared HMAC secret to RS256, because with a shared secret the key that verifies a token also mints one — any of the six services holding it could have forged an admin session. The migration runs live: verification accepts both algorithms at once so week-old sessions keep working, and keys carry an id so rotation needs no flag day. An earlier version of that change refused to boot when half-configured, which turned an incomplete migration into an outage; it now derives what it needs from the key it already has.</p>
@@ -66,7 +66,7 @@
           <div class="languages">
             <span>JavaScript</span>
           </div>
-          <p class="card-meta">updated today · 60 commits · 107 tests</p>
+          <p class="card-meta">updated today · 62 commits · 113 tests</p>
           <a href="https://github.com/Octopus-Security/octopus-auth" class="repo-link">See more on GitHub</a>
         </article>
         <article class="project-card project-card-wide">
@@ -84,7 +84,7 @@
           <div class="languages">
             <span>JavaScript</span>
           </div>
-          <p class="card-meta">updated 22 days ago · 12 commits · 90 tests</p>
+          <p class="card-meta">updated today · 13 commits · 90 tests</p>
           <a href="https://github.com/Octopus-Security/octopus-auth-client" class="repo-link">See more on GitHub</a>
         </article>
         <article class="project-card project-card-wide">
@@ -105,7 +105,7 @@
             <span>JavaScript</span>
             <span>Python</span>
           </div>
-          <p class="card-meta">updated 19 days ago · 63 commits</p>
+          <p class="card-meta">updated 20 days ago · 63 commits</p>
           <a href="https://github.com/Octopus-Security/octopus-edm" class="repo-link">See more on GitHub</a>
         </article>
         <article class="project-card project-card-wide">
@@ -122,7 +122,7 @@
           <div class="languages">
             <span>JavaScript</span>
           </div>
-          <p class="card-meta">updated 2 days ago · 406 commits · 405 tests</p>
+          <p class="card-meta">updated today · 407 commits · 407 tests</p>
         </article>
         <article class="project-card project-card-wide">
           <h3>Octopus Shopper</h3>
@@ -140,12 +140,86 @@
             <span>JavaScript</span>
             <span>CSS</span>
           </div>
-          <p class="card-meta">updated today · 54 commits · 91 tests</p>
+          <p class="card-meta">updated today · 56 commits · 95 tests</p>
           <a href="https://github.com/Octopus-Security/octopus-shopper" class="repo-link">See more on GitHub</a>
         </article>
         <article class="project-card project-card-wide">
+          <h3>Octopus Science</h3>
+          <p class="card-blurb">A chemistry study tool: periodic table, Lewis structures, and units that stay honest.</p>
+          <div class="card-detail">
+            <p>Built as a companion to a first-year chemistry text. It draws Lewis structures, balances equations, and reads a textbook PDF looking for one specific thing: places where a figure is quoted in SI and US units that do not actually agree.</p>
+            <p>The unit scanner is the part with judgement in it. Conversions are read from a single table rather than retyped per call site, and a guard fails the build if the two ever drift apart — a converter that is wrong in one direction only is the kind of bug that survives review. The periodic table was the fiddlier problem: the detail card lives in the table's own empty block, so it has to stay readable from a wide desktop down to a phone at 260% zoom without ever covering an element. That is arithmetic, not taste, and it is asserted against every tile at thirteen widths.</p>
+          </div>
+          <ul class="card-highlights">
+            <li>Detects SI/US unit disagreements in textbook figures</li>
+            <li>Conversions defined once, with a test that fails on drift</li>
+            <li>Detail card provably never overlaps a table cell, at any zoom</li>
+          </ul>
+          <div class="languages">
+            <span>JavaScript</span>
+            <span>CSS</span>
+          </div>
+          <p class="card-meta">updated today · 26 commits · 181 tests</p>
+        </article>
+        <article class="project-card project-card-wide">
+          <h3>Octopus EE</h3>
+          <p class="card-blurb">An electronics planner for a modular USB-MIDI controller, before anything is soldered.</p>
+          <div class="card-detail">
+            <p>A dual virtual breadboard tied to a real parts inventory and to ESP32-S3 pin rules. The point is to find the mistakes while they are still free — a wire between two holes on the same strip is refused with a reason rather than silently accepted, and the generated firmware carries the pins the project actually assigns instead of a plausible default.</p>
+            <p>The original build plan was written without access to this platform and several of its load-bearing assumptions were simply wrong — it assumed an OIDC provider that does not exist here. Those corrections are recorded in the repository rather than quietly fixed, because the next person to read the plan will believe it otherwise.</p>
+          </div>
+          <ul class="card-highlights">
+            <li>Validates wiring against real ESP32-S3 pin constraints</li>
+            <li>Firmware generated from the project, not from a template</li>
+            <li>Superseded assumptions written down, not silently dropped</li>
+          </ul>
+          <div class="languages">
+            <span>JavaScript</span>
+            <span>CSS</span>
+          </div>
+          <p class="card-meta">updated yesterday · 88 commits · 213 tests</p>
+        </article>
+        <article class="project-card project-card-wide">
+          <h3>Octopus Planner</h3>
+          <p class="card-blurb">Project and canvas planning, and a migration that refused to guess.</p>
+          <div class="card-detail">
+            <p>The interesting part is not the planner, it is what happened when it gained multiple users. Rows created before ownership existed had no owner, and the obvious migration — backfill them to the most likely account — risks handing one person's work to somebody else, which is the exact thing being fixed.</p>
+            <p>So they belong to nobody until claimed, and an admin turning up is treated as proof enough of who was there first. To everyone else those rows do not exist. Asking for someone else's row returns a 404 rather than a 403 throughout, because a 403 confirms the row is there.</p>
+          </div>
+          <ul class="card-highlights">
+            <li>Additive migrations only — no table is rebuilt or dropped</li>
+            <li>Unowned rows are claimed, never guessed at</li>
+            <li>404 rather than 403, so a probe learns nothing</li>
+          </ul>
+          <div class="languages">
+            <span>JavaScript</span>
+            <span>TypeScript</span>
+            <span>CSS</span>
+          </div>
+          <p class="card-meta">updated today · 16 commits · 2 tests</p>
+        </article>
+        <article class="project-card project-card-wide">
+          <h3>Budget and Health</h3>
+          <p class="card-blurb">Two trackers that hold other people's data, and the boundary that keeps them apart.</p>
+          <div class="card-detail">
+            <p>Both give every account its own database file rather than a shared table with an owner column. It is the less fashionable choice and it is the right one here: the file is the boundary, so a query that forgets to filter is still correct, and the failure mode of forgetting is nothing rather than everyone's data.</p>
+            <p>That only holds while two people can never resolve to the same file, and the filename is built from the username. For a long time the only thing preventing a hostile name was a validation rule in a different service — invisible from the file relying on it. It is now enforced in both places, and refuses rather than sanitises, because stripping the bad characters would quietly map two people onto one database.</p>
+          </div>
+          <ul class="card-highlights">
+            <li>A database per account — the file is the isolation boundary</li>
+            <li>Path safety enforced where the data lives, not only upstream</li>
+            <li>Refuses unsafe input instead of cleaning it into a collision</li>
+          </ul>
+          <div class="languages">
+            <span>JavaScript</span>
+            <span>CSS</span>
+          </div>
+          <p class="card-meta">updated today · 94 commits · 15 tests</p>
+          <a href="https://github.com/Octopus-Security/octopus-budget" class="repo-link">See more on GitHub</a>
+        </article>
+        <article class="project-card project-card-wide">
           <h3>The estate</h3>
-          <p class="card-blurb">Roughly a dozen containerised services on NixOS, deployed from git.</p>
+          <p class="card-blurb">Close to thirty containerised services on NixOS, deployed from git.</p>
           <div class="card-detail">
             <p>A declarative host running containerised services, deployed by pulling from git rather than by anyone SSHing in — including an operations service that drives redeployments through the orchestrator's API and rotates credentials across stacks.</p>
             <p>The lesson that cost the most: a variable set in the orchestrator only reaches a container if the compose file names it. Configuration that looks correct in the UI and never arrives is a genuinely nasty class of bug, because nothing errors — the service simply keeps using the old default while you believe you changed it.</p>
@@ -165,7 +239,7 @@
           <div class="languages">
             <span>JavaScript</span>
           </div>
-          <p class="card-meta">updated 29 days ago · 75 commits</p>
+          <p class="card-meta">updated today · 76 commits · 2 tests</p>
           <a href="https://github.com/anonymous14386/alfred-psychopathy" class="repo-link">See more on GitHub</a>
         </article>
       </div>
@@ -177,6 +251,7 @@
                 <img id="otlogo" src="images/octopusTech.png"/>
                 <p><a href="https://github.com/anonymous14386">Fork me on GitHub!&nbsp;<img src="images/githubLogo.png" class="github-logo"/></a></p>
                 <p><a href="https://github.com/mutablefigment">Fork mutable on GitHub!&nbsp;<img src="images/githubLogo.png" class="github-logo"/></a></p>
+                <p><a href="https://github.com/LoopyLuci">Fork Luci on GitHub!&nbsp;<img src="images/githubLogo.png" class="github-logo"/></a></p>
             </center>
         </div>
 

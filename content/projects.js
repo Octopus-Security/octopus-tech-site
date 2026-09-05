@@ -29,7 +29,7 @@ module.exports = [
     name: 'Octopus Auth',
     repo: 'octopus-auth',
     url: 'https://github.com/Octopus-Security/octopus-auth',
-    blurb: 'Single sign-on for a dozen self-hosted services — TOTP, recovery codes, and revocable sessions.',
+    blurb: 'Single sign-on for every service on the estate — TOTP, recovery codes, and revocable sessions.',
     detail:
       'Every app behind one login. Two-factor is mandatory and enforced at enrolment, so an '
       + 'account cannot exist without it. Sessions are revocable without storing a single token: '
@@ -129,10 +129,94 @@ module.exports = [
     ],
   },
   {
+    name: 'Octopus Science',
+    repo: 'octopus-science',
+    url: null,
+    blurb: 'A chemistry study tool: periodic table, Lewis structures, and units that stay honest.',
+    detail:
+      'Built as a companion to a first-year chemistry text. It draws Lewis structures, balances '
+      + 'equations, and reads a textbook PDF looking for one specific thing: places where a '
+      + 'figure is quoted in SI and US units that do not actually agree.\n\n'
+      + 'The unit scanner is the part with judgement in it. Conversions are read from a single '
+      + 'table rather than retyped per call site, and a guard fails the build if the two ever '
+      + 'drift apart — a converter that is wrong in one direction only is the kind of bug that '
+      + 'survives review. The periodic table was the fiddlier problem: the detail card lives in '
+      + 'the table\'s own empty block, so it has to stay readable from a wide desktop down to a '
+      + 'phone at 260% zoom without ever covering an element. That is arithmetic, not taste, and '
+      + 'it is asserted against every tile at thirteen widths.',
+    highlights: [
+      'Detects SI/US unit disagreements in textbook figures',
+      'Conversions defined once, with a test that fails on drift',
+      'Detail card provably never overlaps a table cell, at any zoom',
+    ],
+  },
+  {
+    name: 'Octopus EE',
+    repo: 'octopus-ee',
+    url: null,
+    blurb: 'An electronics planner for a modular USB-MIDI controller, before anything is soldered.',
+    detail:
+      'A dual virtual breadboard tied to a real parts inventory and to ESP32-S3 pin rules. The '
+      + 'point is to find the mistakes while they are still free — a wire between two holes on '
+      + 'the same strip is refused with a reason rather than silently accepted, and the '
+      + 'generated firmware carries the pins the project actually assigns instead of a plausible '
+      + 'default.\n\n'
+      + 'The original build plan was written without access to this platform and several of its '
+      + 'load-bearing assumptions were simply wrong — it assumed an OIDC provider that does not '
+      + 'exist here. Those corrections are recorded in the repository rather than quietly fixed, '
+      + 'because the next person to read the plan will believe it otherwise.',
+    highlights: [
+      'Validates wiring against real ESP32-S3 pin constraints',
+      'Firmware generated from the project, not from a template',
+      'Superseded assumptions written down, not silently dropped',
+    ],
+  },
+  {
+    name: 'Octopus Planner',
+    repo: 'octopus-planner',
+    url: null,
+    blurb: 'Project and canvas planning, and a migration that refused to guess.',
+    detail:
+      'The interesting part is not the planner, it is what happened when it gained multiple '
+      + 'users. Rows created before ownership existed had no owner, and the obvious migration — '
+      + 'backfill them to the most likely account — risks handing one person\'s work to '
+      + 'somebody else, which is the exact thing being fixed.\n\n'
+      + 'So they belong to nobody until claimed, and an admin turning up is treated as proof '
+      + 'enough of who was there first. To everyone else those rows do not exist. Asking for '
+      + 'someone else\'s row returns a 404 rather than a 403 throughout, because a 403 confirms '
+      + 'the row is there.',
+    highlights: [
+      'Additive migrations only — no table is rebuilt or dropped',
+      'Unowned rows are claimed, never guessed at',
+      '404 rather than 403, so a probe learns nothing',
+    ],
+  },
+  {
+    name: 'Budget and Health',
+    repo: 'octopus-budget',
+    url: 'https://github.com/Octopus-Security/octopus-budget',
+    blurb: 'Two trackers that hold other people\'s data, and the boundary that keeps them apart.',
+    detail:
+      'Both give every account its own database file rather than a shared table with an owner '
+      + 'column. It is the less fashionable choice and it is the right one here: the file is the '
+      + 'boundary, so a query that forgets to filter is still correct, and the failure mode of '
+      + 'forgetting is nothing rather than everyone\'s data.\n\n'
+      + 'That only holds while two people can never resolve to the same file, and the filename is '
+      + 'built from the username. For a long time the only thing preventing a hostile name was a '
+      + 'validation rule in a different service — invisible from the file relying on it. It is now '
+      + 'enforced in both places, and refuses rather than sanitises, because stripping the bad '
+      + 'characters would quietly map two people onto one database.',
+    highlights: [
+      'A database per account — the file is the isolation boundary',
+      'Path safety enforced where the data lives, not only upstream',
+      'Refuses unsafe input instead of cleaning it into a collision',
+    ],
+  },
+  {
     name: 'The estate',
     repo: null,
     url: null,
-    blurb: 'Roughly a dozen containerised services on NixOS, deployed from git.',
+    blurb: 'Close to thirty containerised services on NixOS, deployed from git.',
     detail:
       'A declarative host running containerised services, deployed by pulling from git rather '
       + 'than by anyone SSHing in — including an operations service that drives redeployments '
