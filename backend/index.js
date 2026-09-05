@@ -1,3 +1,19 @@
+/*
+ * ABANDONED PROTOTYPE — nothing builds this and nothing runs it.
+ *
+ * The Dockerfile at the repo root is nginx:alpine and copies only `public/`.
+ * This directory's own Dockerfile is referenced by no compose file, and the
+ * compose that does exist passes no environment, so DATABASE_URL and
+ * JWT_SECRET below are unset wherever this repo is deployed.
+ *
+ * It is the first cut of the budget tracker, which became its own service and
+ * long ago outgrew this. Kept as history. See README.md, "`backend/` is not
+ * part of this site".
+ *
+ * Do not revive it as-is. It mints its own JWTs, which single sign-on does not
+ * allow, and `POST /register` below is unauthenticated public sign-up.
+ */
+
 require('dotenv').config();
 const express = require('express');
 const { Pool } = require('pg');

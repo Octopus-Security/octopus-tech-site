@@ -32,3 +32,34 @@ repos checked out, so it runs locally rather than in the image build.
 No subdomains, no stack names, no ports, no service topology. The estate is
 described, never mapped — a portfolio should not double as reconnaissance.
 `content/projects.js` says this too, where someone adding a project will read it.
+
+## `backend/` is not part of this site, and never has been
+
+`backend/` and `schema.sql` are an **abandoned prototype**. Nothing builds them
+and nothing runs them.
+
+The `Dockerfile` at the root of this repo is `nginx:alpine`; it copies `public/`
+and nothing else. There is no Node in the image, `docker-compose.yml` builds
+that Dockerfile and passes no environment at all, and `backend/Dockerfile` is
+referenced by no compose file in the workspace. The site is static.
+
+What it was: a first cut at the budget tracker — pay periods, expenses,
+accounts, debts — with its own user table, its own bcrypt registration and its
+own JWT signing. That work moved into a service of its own long ago and grew
+well past this, so what is left here is the ancestor, not a component.
+
+**It is kept only as history, and three things about it mislead.**
+
+- It signs its own tokens with `JWT_SECRET`. Single sign-on issues tokens from
+  one service and nothing else mints them, so this is the one file in the
+  workspace that contradicts that rule — and it turns up in every audit of who
+  holds that variable, looking live each time.
+- It exposes an unauthenticated `POST /register`. Harmless while nothing builds
+  it; a public sign-up outside SSO the moment anything does.
+- It has been maintained by accident. The last commit to it bumped Node 18 → 22
+  and rebuilt bcrypt against the new image — real work, spent on a Dockerfile
+  that is never invoked.
+
+Nothing here is exposed: it hardcodes no credentials and reads everything from
+the environment, which is empty for it in any case. Delete it whenever the
+history is no longer wanted — git keeps it either way.
