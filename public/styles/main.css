@@ -120,8 +120,17 @@ a:active  { color: #2ecc71; }
     border-radius: 10px;
     border: 1px solid #222;
     overflow: hidden;
-    top: calc(100% + 6px);
+    /* The 6px space under the button is drawn with a transparent TOP BORDER
+       rather than an offset, so it is part of the menu's own box. The menu
+       therefore touches the button and there is no strip belonging to neither —
+       which is what closed it under a pointer crossing slowly, and also under
+       one moving diagonally past the button's right edge toward the wider menu.
+       `background-clip: padding-box` keeps the panel background out of that
+       border so the gap still reads as empty space. */
+    top: 100%;
     left: 0;
+    border-top: 6px solid transparent;
+    background-clip: padding-box;
 }
 
 .dropdown-content a {
@@ -139,6 +148,7 @@ a:active  { color: #2ecc71; }
 }
 
 .dropdown:hover .dropdown-content { display: block; }
+
 
 /* ── Lizard / Rat Buttons ───────────────────────────────────── */
 .nav-buttons-container {
@@ -181,6 +191,21 @@ a:active  { color: #2ecc71; }
     text-align: center;
     padding: 20px 0;
 }
+
+/* One gap for the whole footer stack.
+   The logo is an <img>, which is inline by default, so the space under it came
+   from its line box rather than from a margin — a different mechanism from the
+   collapsed 1em between the <p> elements below it, and therefore a different
+   size. Laying the column out with flex removes both mechanisms: `gap` applies
+   equally between every pair, so the logo sits the same distance above the
+   first link as the links sit from each other. */
+.bottom center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+}
+.bottom center > * { margin: 0; }
 
 /* ── Images ─────────────────────────────────────────────────── */
 img { max-width: 100%; height: auto; }
