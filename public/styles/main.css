@@ -91,6 +91,13 @@ a:active  { color: #2ecc71; }
 .dropdown {
     position: relative;
     display: inline-block;
+    /* As wide as the panel it opens, not as wide as the button.
+       The button is 110px and the menu is 200px, so a pointer heading for the
+       right-hand side of the menu used to leave `.dropdown` sideways — while
+       still level with the button, before it ever reached the gap — and the menu
+       closed. The top bar is `space-between`, so the extra 90px is empty space
+       to the button's right and nothing moves. */
+    min-width: 200px;
 }
 
 .dropbtn {

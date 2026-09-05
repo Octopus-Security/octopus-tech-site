@@ -42,7 +42,7 @@ for (const file of htmlFiles(PUBLIC).sort()) {
 
   const button = count(/class="lizardButton"/g);
   const audio  = count(/id="lizardSound"/g);
-  const script = count(/<script src="[^"]*scripts\/main\.js"><\/script>/g);
+  const script = count(/<script src="[^"]*scripts\/main\.js(\?v=[a-f0-9]+)?"><\/script>/g);
 
   if (button === 0) { problems.push(`${rel}: no lizard button`); continue; }
 
@@ -54,8 +54,13 @@ for (const file of htmlFiles(PUBLIC).sort()) {
   if (button !== 1) problems.push(`${rel}: expected 1 lizard button, found ${button}`);
 
   // Relative depth has to match where the file actually sits.
+  // The asset links carry a `?v=<hash>` cache stamp (tools/stamp-assets.mjs),
+  // so match the path and allow the query string after it. Matching the bare
+  // path exactly is what this check did until 2026-09-05, and stamping the
+  // assets made every page look as though it had lost its script tag.
   const prefix = '../'.repeat(rel.split('/').length - 1);
-  if (script === 1 && !src.includes(`src="${prefix}scripts/main.js"`)) {
+  const scriptSrc = new RegExp(`src="${prefix.replace(/\./g, '\\.')}scripts/main\\.js(\\?v=[a-f0-9]+)?"`);
+  if (script === 1 && !scriptSrc.test(src)) {
     problems.push(`${rel}: main.js path is wrong for this directory (expected "${prefix}scripts/main.js")`);
   }
 
