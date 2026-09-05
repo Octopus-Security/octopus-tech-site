@@ -28,7 +28,7 @@ module.exports = [
   {
     name: 'Octopus Auth',
     repo: 'octopus-auth',
-    url: 'https://github.com/Octopus-Security/octopus-auth',
+    url: null,
     blurb: 'Single sign-on for every service on the estate — TOTP, recovery codes, and revocable sessions.',
     detail:
       'Every app behind one login. Two-factor is mandatory and enforced at enrolment, so an '
@@ -72,7 +72,7 @@ module.exports = [
   {
     name: 'Octopus EDM',
     repo: 'octopus-edm',
-    url: 'https://github.com/Octopus-Security/octopus-edm',
+    url: null,
     blurb: 'A browser music workstation with neural synthesis and a live round-trip into FL Studio.',
     detail:
       'Step sequencer, piano roll, mixer and sample browser built on the Web Audio API, with '
@@ -112,7 +112,7 @@ module.exports = [
   {
     name: 'Octopus Shopper',
     repo: 'octopus-shopper',
-    url: 'https://github.com/Octopus-Security/octopus-shopper',
+    url: null,
     blurb: 'Recipe parsing and grocery price comparison across several retailers.',
     detail:
       'Parses a recipe from a URL or a block of pasted text into structured ingredients, then '

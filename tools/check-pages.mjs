@@ -93,6 +93,36 @@ for (const file of htmlFiles(PUBLIC).sort()) {
   }
 }
 
+// ── Project links actually resolve (opt-in: needs the network) ───────────────
+//
+// `node tools/check-pages.mjs --links`
+//
+// Every "See more on GitHub" link on the projects page was a promise to a
+// stranger, and three of them were 404s: octopus-auth, octopus-edm and
+// octopus-shopper were all flipped private after the page was written, and
+// nothing connected those two facts. The card still rendered, the link still
+// looked right, and only a visitor clicking it ever found out.
+//
+// Offline by default because a build should not need the network, and because a
+// GitHub rate-limit would otherwise fail the check for a reason that has nothing
+// to do with the page.
+if (process.argv.includes('--links')) {
+  const projects = (await import('../content/projects.js')).default;
+  const linked = projects.filter(p => p.url);
+  await Promise.all(linked.map(async p => {
+    try {
+      const res = await fetch(p.url, { method: 'HEAD', redirect: 'follow' });
+      if (!res.ok) {
+        problems.push(`projects: "${p.name}" links to ${p.url} — HTTP ${res.status}. `
+          + 'If the repo went private, set url: null so the card simply has no link.');
+      }
+    } catch (err) {
+      problems.push(`projects: "${p.name}" link ${p.url} could not be checked — ${err.message}`);
+    }
+  }));
+  console.log(`Checked ${linked.length} project link(s).`);
+}
+
 if (problems.length) {
   console.error('Page checks failed:');
   for (const p of problems) console.error(`  ${p}`);
