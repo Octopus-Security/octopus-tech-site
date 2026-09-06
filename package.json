@@ -1,0 +1,11 @@
+{
+  "name": "octopus-technology",
+  "private": true,
+  "description": "The public site. Hand-maintained static pages served by nginx; no build step.",
+  "scripts": {
+    "stamp": "node tools/stamp-assets.mjs",
+    "check": "node tools/stamp-assets.mjs --check && node tools/check-pages.mjs",
+    "projects": "node tools/build-projects.mjs",
+    "test": "node --test test/*.test.js"
+  }
+}
