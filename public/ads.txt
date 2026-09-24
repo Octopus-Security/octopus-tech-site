@@ -1,0 +1,20 @@
+# ads.txt — IAB Tech Lab Authorized Digital Sellers, v1.0.2
+#
+# This is the ROOT domain's copy, and it is the one that matters. A crawler
+# checking an ad on blog.octopustechnology.net resolves ads.txt against the
+# root domain first, so a subdomain that serves ads while the apex 404s here
+# is unauthorized inventory — the ads render and the impressions are not paid.
+# The blog served its own /ads.txt from 2026-09-23 and this file did not exist;
+# that is the gap this closes.
+#
+# Line 1 authorizes Google to sell this domain's inventory. f08c47fec0942fa0 is
+# Google's own TAG-ID and is the same for every publisher — it is not a secret
+# and is not account-specific. pub-7453602091883780 is the AdSense publisher ID,
+# which rides in the page source of every ad unit; it is public by nature.
+google.com, pub-7453602091883780, DIRECT, f08c47fec0942fa0
+
+# Line 2 delegates to the blog's own file rather than duplicating the record.
+# The blog generates its /ads.txt from PUBLIC_ADSENSE_CLIENT at build time
+# (octopus-blog/src/pages/ads.txt.js), so it stays correct on its own if the
+# publisher ID ever changes; a copy pasted here would not.
+subdomain=blog.octopustechnology.net
