@@ -505,3 +505,65 @@ ul { list-style-type: none; padding-left: 0; }
 @media (max-width: 700px) {
     .contact-info, .content-container p, .content-container li { max-width: none; }
 }
+
+/* ── Site footer (pricing, legal, contact) ───────────────────
+   Sits below the logo block on every page. Plain links, no new colours: the
+   green is the same accent the contact page uses. */
+.site-footer { text-align: center; padding: 0 16px 28px; }
+.site-footer nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; }
+.site-footer a { color: #888; font-size: 0.85rem; text-decoration: none; }
+.site-footer a:hover { color: #2ecc71; text-decoration: underline; }
+
+/* ── Octopus Learn / legal pages ─────────────────────────────
+   learn.html, terms.html, privacy.html, refunds.html. */
+.learn-hero { text-align: center; }
+.learn-hero .lede { margin: 0 auto 1.2em; max-width: 60ch; }
+.learn-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+    margin: 20px 0 8px;
+}
+.learn-app {
+    background: #141414;
+    border: 1px solid #222;
+    border-radius: 12px;
+    padding: 20px;
+}
+.learn-app h3 { margin-top: 0; }
+.learn-app ul { padding-left: 1.2em; margin: 0; color: #aaa; line-height: 1.6; }
+.learn-app li { max-width: none; }
+.plans { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; margin: 20px 0; }
+.plan {
+    background: #141414;
+    border: 1px solid #222;
+    border-radius: 12px;
+    padding: 22px;
+    text-align: center;
+}
+.plan.best { border-color: #2a5c3a; }
+.plan .price { font-size: 2rem; color: #e8e8e8; font-weight: 600; margin: 4px 0; }
+.plan .price small { font-size: 0.9rem; color: #888; font-weight: 400; }
+.buy-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 22px;
+    background: #0d1f13;
+    border: 1px solid #2ecc71;
+    border-radius: 8px;
+    color: #2ecc71;
+    font-weight: 600;
+    text-decoration: none;
+}
+.buy-btn:hover { background: #12301c; }
+.promo {
+    border: 1px dashed #2a5c3a;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin: 16px 0;
+    color: #aaa;
+}
+.promo code { color: #2ecc71; }
+.legal h2 { font-size: 1.15rem; }
+.legal .owner-fill { background: #2a2310; color: #e6c35c; padding: 1px 6px; border-radius: 4px; }
+.legal-meta { color: #777; font-size: 0.85rem; }

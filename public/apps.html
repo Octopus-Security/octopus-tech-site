@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Octopus Technology — Apps</title>
-  <link rel="stylesheet" href="styles/main.css?v=5291f038">
+  <link rel="stylesheet" href="styles/main.css?v=ae30fd26">
   <link rel="icon" type="image/x-icon" href="images/favicon.ico">
   <style>
     .apps-hero { text-align: center; padding: 60px 20px 20px; }
@@ -114,6 +114,10 @@
     .access.open    { background: #0d1f13; border: 1px solid #2a5c3a; color: #2ecc71; }
     .access.account { background: #101a2a; border: 1px solid #274a72; color: #5a9bd8; }
     .access.private { background: #1a1a1a; border: 1px solid #333;    color: #888;    }
+    .learn-badge {
+      font-size: 0.72rem; border-radius: 4px; padding: 2px 8px;
+      background: #1a1a10; border: 1px solid #5c5a2a; color: #d8c85a;
+    }
     .lock-icon { font-size: 0.75rem; color: #444; }
 
     /* Access legend under the hero */
@@ -145,6 +149,7 @@
         <a href="contact.html">Contact</a>
         <a href="about.html">About</a>
         <a href="apps.html">Apps</a>
+        <a href="learn.html">Learn</a>
         <div>
           <iframe src="https://www.monero.how/widget" style="width:210px;
             height:130px" allowTransparency="true" border="0" hideFocus="true" marginwidth="0"
@@ -284,18 +289,32 @@
       <div class="card-footer"><span class="tag">Finance</span><span class="access account">● Account</span></div>
     </a>
 
-    <a class="app-card" data-category="Learning" href="https://math.octopustechnology.net" target="_blank" rel="noopener">
+    <a class="app-card" data-category="Learning" href="learn.html">
       <div class="icon">📐</div>
-      <h2>Math Practice</h2>
-      <p>Practice problems and quizzes with a step-by-step tutor that follows up on the topics you keep getting wrong.</p>
-      <div class="card-footer"><span class="tag">Learning</span><span class="access account">● Account</span></div>
+      <h2>Octopus Math</h2>
+      <p>Math tutor: lessons, a built-in exercise bank, cheat sheets and revision cards, with LaTeX rendering. Sign in to practise.</p>
+      <div class="card-footer"><span class="tag">Learning</span><span class="learn-badge">Part of Octopus Learn</span><span class="access account">● Subscription</span></div>
     </a>
 
-    <a class="app-card" data-category="Tools" href="https://ee.octopustechnology.net" target="_blank" rel="noopener">
+    <a class="app-card" data-category="Tools" href="learn.html">
       <div class="icon">🔌</div>
-      <h2>Octopus EE</h2>
+      <h2>Octopus Electronics</h2>
       <p>Breadboard planner with real tie-point topology, a parts catalogue, design review and generated firmware — plus published reference builds.</p>
-      <div class="card-footer"><span class="tag">Tools</span><span class="access account">● Account</span></div>
+      <div class="card-footer"><span class="tag">Tools</span><span class="learn-badge">Part of Octopus Learn</span><span class="access account">● Subscription</span></div>
+    </a>
+
+    <a class="app-card" data-category="Learning" href="learn.html">
+      <div class="icon">💻</div>
+      <h2>Octopus Code</h2>
+      <p>Learn to code across about 16 languages: lessons, an exercise bank, puzzles and flashcards. It is not an IDE; nothing runs in the browser.</p>
+      <div class="card-footer"><span class="tag">Learning</span><span class="learn-badge">Part of Octopus Learn</span><span class="access account">● Subscription</span></div>
+    </a>
+
+    <a class="app-card" data-category="Learning" href="learn.html">
+      <div class="icon">⚗️</div>
+      <h2>Octopus Science</h2>
+      <p>Interactive chemistry: periodic table, bond builder, calculator and practice drills.</p>
+      <div class="card-footer"><span class="tag">Learning</span><span class="learn-badge">Part of Octopus Learn</span><span class="access account">● Subscription</span></div>
     </a>
 
     <a class="app-card" data-category="Media" href="https://media.octopustechnology.net" target="_blank" rel="noopener">
@@ -385,6 +404,15 @@
       }
     });
   </script>
+        <footer class="site-footer">
+            <nav aria-label="Pricing, legal and contact">
+                <a href="learn.html#pricing">Pricing</a>
+                <a href="terms.html">Terms</a>
+                <a href="privacy.html">Privacy</a>
+                <a href="refunds.html">Refunds</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+        </footer>
         <audio id="lizardSound" src="resources/lizard-button.mp3" preload="auto"></audio>
         <audio id="ratSound" src="resources/lizard-button.mp3" preload="auto"></audio>
 

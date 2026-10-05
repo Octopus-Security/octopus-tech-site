@@ -32,7 +32,7 @@ function htmlFiles(dir) {
   });
 }
 
-const NAV = ['index.html', 'projects.html', 'writing.html', 'contact.html', 'about.html', 'apps.html'];
+const NAV = ['index.html', 'projects.html', 'writing.html', 'contact.html', 'about.html', 'apps.html', 'learn.html'];
 const problems = [];
 
 for (const file of htmlFiles(PUBLIC).sort()) {
@@ -62,6 +62,11 @@ for (const file of htmlFiles(PUBLIC).sort()) {
   const scriptSrc = new RegExp(`src="${prefix.replace(/\./g, '\\.')}scripts/main\\.js(\\?v=[a-f0-9]+)?"`);
   if (script === 1 && !scriptSrc.test(src)) {
     problems.push(`${rel}: main.js path is wrong for this directory (expected "${prefix}scripts/main.js")`);
+  }
+
+  // The legal links must be on every page (Octopus Learn takes payments).
+  for (const page of ['terms.html', 'privacy.html', 'refunds.html', 'contact.html']) {
+    if (!src.includes(`href="${prefix}${page}"`)) problems.push(`${rel}: footer is missing ${page}`);
   }
 
   for (const page of NAV) {
@@ -94,7 +99,9 @@ for (const file of htmlFiles(PUBLIC).sort()) {
   // real subdomain — author is at write.…, planner at plan.…, and guessing from
   // the repo name gives you a host that does not resolve.
   for (const m of src.matchAll(/<a class="app-card[^"]*"[^>]*href="([^"]*)"/g)) {
-    if (!/^https?:\/\/\S+/.test(m[1])) problems.push(`apps.html: card with a non-absolute href "${m[1]}"`);
+    // learn.html is the one deliberate relative target: the four Octopus Learn
+    // apps are sold as one bundle, so their cards go to the page that sells it.
+    if (m[1] !== 'learn.html' && !/^https?:\/\/\S+/.test(m[1])) problems.push(`apps.html: card with a non-absolute href "${m[1]}"`);
   }
 }
 

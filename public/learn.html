@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<!--
+  Octopus Learn landing + pricing page.
+
+  TODO (OWNER): the two Stripe Payment Link URLs below are PLACEHOLDERS. The
+  links do not exist yet. Create them in Stripe (the monthly and yearly prices),
+  set the after-payment redirect to the billing service's /welcome page, then
+  paste the real URLs into LEARN_CONFIG.paymentLinks. They are the ONLY place
+  the URLs live: the buy buttons read them on load. Until they are replaced the
+  buttons are disabled and say "Coming soon".
+-->
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>
+            Octopus Learn — Math, Code, Science and Electronics
+        </title>
+        <meta name="description" content="Octopus Learn is one subscription for four learning apps: Math, Code, Science and Electronics. $11 a month or $89 a year.">
+        <link rel="stylesheet" href="styles/main.css?v=ae30fd26">
+        <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    </head>
+
+    <body>
+
+        <div class="topBar">
+            <div class="dropdown">
+                <button class="dropbtn">Menu</button>
+                <div class="dropdown-content">
+                    <a href="index.html">Home</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="writing.html">Writing</a>
+                    <a href="contact.html">Contact</a>
+                    <a href="about.html">About</a>
+                    <a href="apps.html">Apps</a>
+                    <a href="learn.html">Learn</a>
+                    <div>
+                        <iframe src="https://www.monero.how/widget" style="width:210px;
+                            height:130px" allowTransparency="true" border="0" hideFocus="true" marginwidth="0"
+                            marginheight="0" hspace="0" vspace="0" frameBorder="no">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-buttons-container">
+                <div class="extra-buttons">
+                    <button class="lizardButton">🦎</button>
+                    <button class="ratButton">🐀</button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // ======================================================================
+            // TODO (OWNER): replace both placeholder URLs with the real Stripe
+            // Payment Links. This object is the one place they are set.
+            // ======================================================================
+            var LEARN_CONFIG = {
+                paymentLinks: {
+                    monthly: "https://buy.stripe.com/REPLACE_MONTHLY",
+                    yearly:  "https://buy.stripe.com/REPLACE_YEARLY"
+                },
+                promoCode: "LAUNCH5"
+            };
+        </script>
+
+        <div class="content-container">
+            <div class="page-intro learn-hero">
+                <h1>Octopus Learn</h1>
+                <p class="lede">
+                    Four learning apps, one subscription: Math, Code, Science and Electronics.
+                    One account, one price, cancel whenever you like.
+                </p>
+                <p><a class="buy-btn" href="#pricing">See pricing</a></p>
+            </div>
+
+            <h2>What is in it</h2>
+            <div class="learn-grid">
+                <section class="learn-app">
+                    <h3>📐 Math</h3>
+                    <p>A maths tutor.</p>
+                    <ul>
+                        <li>Lessons with a plain-English &ldquo;why it matters&rdquo;, the logic, and a worked example</li>
+                        <li>A built-in exercise bank you can answer by typing, on a sketch pad or by photo</li>
+                        <li>Cheat sheets and revision index cards</li>
+                        <li>Maths rendered with LaTeX</li>
+                        <li>Calculus I, all sixteen chapters, plus Precalculus and more</li>
+                    </ul>
+                </section>
+                <section class="learn-app">
+                    <h3>💻 Code</h3>
+                    <p>Learn to code. It is not an IDE: nothing runs in your browser.</p>
+                    <ul>
+                        <li>Lessons in about 16 tracks, from Python, JavaScript, C and Rust to SQL, Bash and Regex</li>
+                        <li>An exercise bank: type an answer or work it by hand</li>
+                        <li>Puzzles to stay sharp</li>
+                        <li>Term flashcards with spaced review</li>
+                        <li>Your progress follows your account across devices</li>
+                    </ul>
+                </section>
+                <section class="learn-app">
+                    <h3>⚗️ Science</h3>
+                    <p>Interactive chemistry.</p>
+                    <ul>
+                        <li>A colour-coded periodic table of all 118 elements</li>
+                        <li>Bond builder: Lewis structures, shapes and polarity</li>
+                        <li>Calculator with the working shown: molar mass, moles, gas law, titration</li>
+                        <li>Practice drills on naming, reactions and the mole, marked with the working</li>
+                        <li>Lessons that link straight to the matching drills</li>
+                    </ul>
+                </section>
+                <section class="learn-app">
+                    <h3>🔌 Electronics</h3>
+                    <p>A breadboard planner for real hardware.</p>
+                    <ul>
+                        <li>A virtual breadboard that models real tie-point strips and refuses placements that cannot exist</li>
+                        <li>A parts catalogue with the gotchas for each part</li>
+                        <li>Design review that flags wiring mistakes before you solder</li>
+                        <li>Generated firmware from your own pin assignments</li>
+                        <li>Published reference builds to start from</li>
+                    </ul>
+                </section>
+            </div>
+            <p class="legal-meta">
+                Some tutor features use an AI model, and AI can be wrong; the lessons and
+                exercise banks do not depend on one. See the <a href="privacy.html">privacy page</a>.
+            </p>
+
+            <h2 id="pricing">Pricing</h2>
+            <p>One subscription covers all four apps. Prices are in US dollars.</p>
+            <div class="plans">
+                <div class="plan">
+                    <h3>Monthly</h3>
+                    <div class="price">$11 <small>/ month</small></div>
+                    <p>Renews every month.</p>
+                    <a class="buy-btn" id="buy-monthly" href="#pricing">Buy monthly</a>
+                </div>
+                <div class="plan best">
+                    <h3>Yearly</h3>
+                    <div class="price">$89 <small>/ year</small></div>
+                    <p>Renews every year. Works out to about $7.42 a month.</p>
+                    <a class="buy-btn" id="buy-yearly" href="#pricing">Buy yearly</a>
+                </div>
+            </div>
+            <div class="promo">
+                Launch offer: enter promo code <code>LAUNCH5</code> at checkout for
+                <strong>$6 off your first payment</strong>.
+            </div>
+            <p>
+                Subscriptions renew automatically until you cancel. You can cancel at any time and
+                keep access until the end of the period you paid for. Payments are handled by
+                Stripe, so we never see your card number. See the
+                <a href="terms.html">terms</a> and <a href="refunds.html">refund policy</a>.
+            </p>
+
+            <h2>What happens after you buy</h2>
+            <ol>
+                <li>Stripe takes your payment.</li>
+                <li>You land on a welcome page that shows your <strong>invite code</strong>. Keep it safe.</li>
+                <li>Use the code to create your account at
+                    <a href="https://auth.octopustechnology.net/register">auth.octopustechnology.net/register</a>.</li>
+                <li>Sign in and the four apps are unlocked on that account.</li>
+            </ol>
+            <p>Lost your code, or something did not work? <a href="contact.html#support">Contact support</a>.</p>
+        </div>
+
+        <script>
+            // Wire the buy buttons from LEARN_CONFIG. A placeholder URL means the
+            // link has not been created yet, so the button is disabled instead of
+            // sending anyone to a dead Stripe page.
+            (function () {
+                function wire(id, url) {
+                    var el = document.getElementById(id);
+                    if (!el) return;
+                    if (!url || /REPLACE_/.test(url)) {
+                        el.textContent = "Coming soon";
+                        el.setAttribute("aria-disabled", "true");
+                        el.style.opacity = "0.5";
+                        el.style.pointerEvents = "none";
+                        return;
+                    }
+                    el.href = url;
+                }
+                wire("buy-monthly", LEARN_CONFIG.paymentLinks.monthly);
+                wire("buy-yearly",  LEARN_CONFIG.paymentLinks.yearly);
+            })();
+        </script>
+
+        <footer class="site-footer">
+            <nav aria-label="Pricing, legal and contact">
+                <a href="learn.html#pricing">Pricing</a>
+                <a href="terms.html">Terms</a>
+                <a href="privacy.html">Privacy</a>
+                <a href="refunds.html">Refunds</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+        </footer>
+        <audio id="lizardSound" src="resources/lizard-button.mp3" preload="auto"></audio>
+        <audio id="ratSound" src="resources/lizard-button.mp3" preload="auto"></audio>
+
+        <script src="scripts/main.js?v=e297477f"></script>
+
+    </body>
+
+</html>
