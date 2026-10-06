@@ -32,7 +32,10 @@ function htmlFiles(dir) {
   });
 }
 
-const NAV = ['index.html', 'projects.html', 'writing.html', 'contact.html', 'about.html', 'apps.html', 'learn.html'];
+const NAV = ['index.html', 'projects.html', 'writing.html', 'contact.html', 'about.html', 'learn.html'];
+// The Apps link is the auth hub, not a page here: apps.html was retired and
+// apps.octopustechnology.net now redirects there (see nginx.conf).
+const HUB_URL = 'https://auth.octopustechnology.net/';
 const problems = [];
 
 for (const file of htmlFiles(PUBLIC).sort()) {
@@ -72,37 +75,8 @@ for (const file of htmlFiles(PUBLIC).sort()) {
   for (const page of NAV) {
     if (!src.includes(`href="${prefix}${page}"`)) problems.push(`${rel}: nav is missing ${page}`);
   }
-}
-
-// ── The apps grid ─────────────────────────────────────────────────────────────
-//
-// Same failure shape as the lizard: a card with a category that has no filter
-// button renders fine and looks correct, right up until someone clicks a filter
-// — then it disappears and cannot be reached by any combination of clicks. A
-// button with no cards is the mirror image, filtering the grid to nothing.
-// Neither throws, and neither is visible on the default "All" view, which is
-// the one you check after editing.
-{
-  const src = readFileSync(join(PUBLIC, 'apps.html'), 'utf8');
-  const cats = new Set([...src.matchAll(/data-category="([^"]+)"/g)].map(m => m[1]));
-  const filters = new Set([...src.matchAll(/data-filter="([^"]+)"/g)].map(m => m[1]));
-  filters.delete('all');
-
-  for (const c of cats) {
-    if (!filters.has(c)) problems.push(`apps.html: category "${c}" has cards but no filter button`);
-  }
-  for (const f of filters) {
-    if (!cats.has(f)) problems.push(`apps.html: filter button "${f}" matches no cards`);
-  }
-
-  // Every card should point somewhere, and the estate's own links should use the
-  // real subdomain — author is at write.…, planner at plan.…, and guessing from
-  // the repo name gives you a host that does not resolve.
-  for (const m of src.matchAll(/<a class="app-card[^"]*"[^>]*href="([^"]*)"/g)) {
-    // learn.html is the one deliberate relative target: the four Octopus Education
-    // apps are sold as one bundle, so their cards go to the page that sells it.
-    if (m[1] !== 'learn.html' && !/^https?:\/\/\S+/.test(m[1])) problems.push(`apps.html: card with a non-absolute href "${m[1]}"`);
-  }
+  if (!src.includes(`<a href="${HUB_URL}">Apps</a>`)) problems.push(`${rel}: nav Apps link must point at ${HUB_URL}`);
+  if (/href="(\.\.\/)?apps\.html"/.test(src)) problems.push(`${rel}: links to the retired apps.html`);
 }
 
 // ── Project links actually resolve (opt-in: needs the network) ───────────────

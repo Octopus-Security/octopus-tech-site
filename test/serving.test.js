@@ -98,3 +98,31 @@ test('the custom config is actually installed, not just present in the repo', ()
   assert.match(df, /COPY nginx\.conf \/etc\/nginx\/conf\.d\/default\.conf/,
     'nginx.conf is not copied over the stock default — none of the rules above apply');
 });
+
+// ── The apps page moved to the auth hub ──────────────────────────────────────
+const HUB = 'https://auth.octopustechnology.net/';
+
+test('apps.octopustechnology.net (any path) redirects to the auth hub', () => {
+  const at = conf.indexOf('server_name apps.octopustechnology.net;');
+  assert.ok(at > 0, 'a server block must match the apps host');
+  const blk = conf.slice(at, conf.indexOf('}', at));
+  assert.ok(blk.includes(`return 301 ${HUB};`), 'it must be a permanent redirect to the hub');
+  assert.ok(!/\$request_uri|\$uri/.test(blk), 'the hub has no per-path routes: do not forward the path');
+});
+
+test('the catch-all server is the default, so the main site is not shadowed', () => {
+  assert.match(conf, /listen 80 default_server;\s*server_name _;/);
+});
+
+test('/apps.html redirects to the hub and the page is gone', () => {
+  assert.ok(block('location = /apps.html').includes(`return 301 ${HUB};`));
+  assert.ok(!fs.existsSync(path.join(pub, 'apps.html')), 'apps.html is retired; the hub is the one launcher');
+});
+
+test('every page nav links the hub, and none links the retired page', () => {
+  for (const p of pages) {
+    const src = fs.readFileSync(p, 'utf8');
+    assert.ok(src.includes(`<a href="${HUB}">Apps</a>`), `${path.relative(pub, p)} nav lacks the hub link`);
+    assert.ok(!/href="(\.\.\/)?apps\.html"/.test(src), `${path.relative(pub, p)} links the retired apps.html`);
+  }
+});
