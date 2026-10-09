@@ -46,6 +46,24 @@ test('there are pages to check — otherwise everything below passes vacuously',
   assert.ok(pages.length >= 3, `found ${pages.length} pages`);
 });
 
+// AdSense verifies octopustechnology.net by this meta tag. The ad script was
+// removed on purpose (the resume shows no ads); the tag is the ownership proof
+// and must be on every page the crawler might open, including ones added later.
+const ADSENSE_META = '<meta name="google-adsense-account" content="ca-pub-7453602091883780">';
+
+test('every page carries the AdSense ownership meta tag and no ad script', () => {
+  const missing = [];
+  const scripts = [];
+  for (const page of pages) {
+    const html = fs.readFileSync(page, 'utf8');
+    const n = html.split(ADSENSE_META).length - 1;
+    if (n !== 1) missing.push(`${path.relative(root, page)} (${n})`);
+    if (/adsbygoogle/.test(html)) scripts.push(path.relative(root, page));
+  }
+  assert.deepEqual(missing, [], 'AdSense ownership tag missing or duplicated');
+  assert.deepEqual(scripts, [], 'the resume site must not load the AdSense script');
+});
+
 test('the stamper reports every page current', () => {
   const out = execFileSync(process.execPath, [path.join(root, 'tools', 'stamp-assets.mjs'), '--check'],
     { cwd: root, encoding: 'utf8' });
