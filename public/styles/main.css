@@ -154,7 +154,15 @@ a:active  { color: #2ecc71; }
     color: #2ecc71;
 }
 
-.dropdown:hover .dropdown-content { display: block; }
+/* Tap and keyboard: main.js toggles .open on the button's click and keeps
+   aria-expanded in step. Hover only opens the menu where hover exists, so a
+   touch tap's emulated hover cannot leave it stuck open. */
+.dropdown.open .dropdown-content { display: block; }
+
+@media (hover: hover) {
+    .dropdown:hover .dropdown-content { display: block; }
+}
+.dropbtn:focus-visible { outline: 2px solid #2ecc71; outline-offset: 2px; }
 
 
 /* ── Lizard / Rat Buttons ───────────────────────────────────── */
@@ -206,13 +214,16 @@ a:active  { color: #2ecc71; }
    size. Laying the column out with flex removes both mechanisms: `gap` applies
    equally between every pair, so the logo sits the same distance above the
    first link as the links sit from each other. */
-.bottom center {
+.centered { text-align: center; }
+.bottom center,
+.bottom .centered {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1em;
 }
-.bottom center > * { margin: 0; }
+.bottom center > *,
+.bottom .centered > * { margin: 0; }
 
 /* ── Images ─────────────────────────────────────────────────── */
 img { max-width: 100%; height: auto; }
