@@ -1,5 +1,6 @@
 FROM node:22-alpine
 WORKDIR /app
+RUN apk upgrade --no-cache
 # bcrypt is a native module: it compiles against THIS image's musl rather than
 # downloading a glibc binary. Node 18 -> 22 changes the ABI, so a prebuild that
 # happened to exist for 18 is not the one this image needs. Build it here, and
