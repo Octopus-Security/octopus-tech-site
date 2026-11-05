@@ -1,7 +1,23 @@
 /* ── Base ──────────────────────────────────────────────────── */
 * { box-sizing: border-box; }
 
+/* The theme colour goes on <html> as well as <body>. The canvas takes its
+   colour from whichever of the two sets one, but in-app browsers (Android
+   WebView) paint the overscroll area and the strip under a collapsing URL bar
+   from the root element, and a root with no colour there shows the default
+   grey/white. `color-scheme: dark` also darkens form controls and scrollbars. */
+html {
+    background-color: #0d0d0d;
+    color-scheme: dark;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
 body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-wrap: break-word;
+    hyphens: manual;
     background-color: #0d0d0d;
     color: #d4d4d4;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -63,7 +79,15 @@ code {
     border-radius: 4px;
     padding: 0.12em 0.4em;
     color: #b8dcc4;
-    white-space: nowrap;
+    /* inline-block keeps the border and padding as ONE box. On an inline
+       element a wrapping code span is split into two boxes, each with its own
+       end caps. Whole tokens still stay whole: `anywhere` only splits when a
+       token is wider than the line, which is the last resort. */
+    display: inline-block;
+    max-width: 100%;
+    vertical-align: baseline;
+    white-space: normal;
+    overflow-wrap: anywhere;
 }
 
 a {
@@ -453,6 +477,8 @@ ul { list-style-type: none; padding-left: 0; }
     padding: 12px 14px;
     margin: 0 0 16px;
     overflow-x: auto;
+    max-width: 100%;
+    -webkit-overflow-scrolling: touch;
     font-size: 0.86rem;
     color: #b4b4b4;
     line-height: 1.55;
@@ -499,8 +525,9 @@ ul { list-style-type: none; padding-left: 0; }
     padding: 0.45em 0.7em;
     user-select: all;
     white-space: normal;
-    word-break: break-all;
+    overflow-wrap: anywhere;
 }
+.contact-id a { display: inline-block; max-width: 100%; }
 
 /* Label/description pairs read better than three near-identical sentences. */
 .steps { margin: 14px 0 0; }
@@ -578,3 +605,45 @@ ul { list-style-type: none; padding-left: 0; }
 .legal h2 { font-size: 1.15rem; }
 .legal .owner-fill { background: #2a2310; color: #e6c35c; padding: 1px 6px; border-radius: 4px; }
 .legal-meta { color: #777; font-size: 0.85rem; }
+
+/* ── Phones (<= 700px) — loaded last so it wins over the older blocks ─────
+   One 16px gutter everywhere (the old rules used 92%/95% widths, which give
+   an uneven 8-20px edge depending on the screen), nothing wider than the
+   viewport, and 44px tap targets for the controls that are pure navigation.
+   Inline links inside prose are exempt: they are part of a sentence. */
+@media (max-width: 700px) {
+    .topBar {
+        width: auto;
+        margin: 12px 16px;
+        padding: 6px;
+        gap: 6px;
+    }
+    .dropdown { min-width: 0; }
+    .dropbtn { min-height: 44px; padding: 10px 16px; }
+    .dropdown-content { max-width: calc(100vw - 32px); }
+    .dropdown-content a { min-height: 44px; display: flex; align-items: center; }
+    .lizardButton, .ratButton { min-width: 44px; min-height: 44px; margin: 0 3px; }
+
+    .content-container {
+        width: auto;
+        margin: 12px 16px 28px;
+        padding: 20px 16px;
+    }
+
+    .link-list a { min-height: 44px; }
+    .site-footer a, .bottom p > a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+    }
+    .site-footer nav { gap: 0 14px; }
+    .buy-btn { min-height: 44px; line-height: 24px; }
+
+    /* Fit an address in the box at 320px: a monospace address is ~0.6em a
+       character, so size it from the viewport rather than breaking it. */
+    .contact-id, .contact-id a { font-size: 1rem; }
+    .contact-id code { font-size: min(0.95rem, 4vw); padding: 0.7em 0.6em; }
+
+    .plan .price { font-size: 1.8rem; }
+    .learn-grid, .plans { grid-template-columns: 1fr; }
+}
