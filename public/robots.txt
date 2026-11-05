@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://octopustechnology.net/sitemap.xml
+Sitemap: https://blog.octopustechnology.net/sitemap-index.xml
