@@ -24,5 +24,9 @@ COPY . .
 RUN rm -rf /usr/local/lib/node_modules/npm /usr/local/lib/node_modules/corepack \
            /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack
 
+# Express and its libraries run their slow development paths without this.
+# After npm install above, so devDependencies are not skipped at build time.
+ENV NODE_ENV=production
+
 EXPOSE 3000
 CMD ["node", "index.js"]
