@@ -144,3 +144,13 @@ test('every page nav links the hub, and none links the retired page', () => {
     assert.ok(!/href="(\.\.\/)?apps\.html"/.test(src), `${path.relative(pub, p)} links the retired apps.html`);
   }
 });
+
+test('security.txt (RFC 9116) exists, is served as text/plain and is not expired', () => {
+  const txt = fs.readFileSync(path.join(pub, '.well-known', 'security.txt'), 'utf8');
+  assert.match(txt, /^Contact: mailto:security@octopustechnology\.net$/m);
+  assert.match(txt, /^Canonical: https:\/\/octopustechnology\.net\/\.well-known\/security\.txt$/m);
+  const exp = txt.match(/^Expires: (.+)$/m);
+  assert.ok(exp, 'Expires is required by RFC 9116');
+  assert.ok(Date.parse(exp[1]) > Date.now(), `security.txt expired ${exp[1]}`);
+  assert.match(block('location = /.well-known/security.txt'), /default_type text\/plain/);
+});
