@@ -16,6 +16,7 @@ html {
 body {
     min-height: 100vh;
     min-height: 100dvh;
+    overflow-x: clip;
     overflow-wrap: break-word;
     hyphens: manual;
     background-color: #0d0d0d;
